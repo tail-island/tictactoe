@@ -1625,8 +1625,8 @@ user    2m57.125s
 sys     0m5.720s</code></pre>
 <p>関数型プログラミングの実行速度って、良くはないけど悪すぎるわけではない感じ<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。<code>for</code>文の71%くらいの速度でした。</p>
 <h3>メモ化が有効な場合も多いしね</h3>
-<p>今回のコードではあまり有効ではなかった（アルファ・ベータ法による枝刈りが効きすぎた）のですけど、実は今回のコードには関数型プログラミングらしい高速化テクニックを入れています。<code>getWinner</code>や<code>getNextPlayer</code>、<code>getNextBoards</code>のところに書いてある<code>R.memoize()</code>です。</p>
-<p>考えてみましょう。副作用がなければ、同じ関数を同じ引数で呼び出した場合の戻り値は必ず同じになります。過去に計算した結果を覚えておけば、再度計算する必要なんかないわけ。これがメモ化と呼ばれるテクニックで、<code>R.memoize()</code>は、このメモ化を実現してくれる（引数と結果の対応表をメモリ内に作成して、関数を実行する代わりにその表の値を自動で返してくれる関数を作成する）関数なんです。</p>
+<p>今回のコードではあまり有効ではなかった（アルファ・ベータ法による枝刈りが効きすぎた）のですけど、実は今回のコードには関数型プログラミングらしい高速化テクニックを入れているんです。<code>getWinner</code>や<code>getNextPlayer</code>、<code>getNextBoards</code>のところに書いてある<code>R.memoize()</code>がそれ。</p>
+<p>考えてみましょう。副作用がなければ、同じ関数を同じ引数で呼び出した場合の戻り値は必ず同じになります。過去に計算した結果を覚えておけば、再度計算しなくても済むわけ。これがメモ化と呼ばれるテクニックで、<code>R.memoize()</code>は、このメモ化を実現してくれる（引数と結果の対応表をメモリ内に作成して、関数を実行する代わりにその表の値を自動で返してくれる関数を作成する）関数なんです。</p>
 <p>あとね、そもそもね、同じゲーム板での最適手は毎回同じなわけで、だったら先程のベンチマークみたいに複数回ゲームが実行されると分かっているなら、<code>getNextBoardByComputer()</code>を<code>R.memoize()</code>しちゃえばよい<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>。というわけで、<code>getNextBoardByComputer()</code>を<code>R.memoize()</code>した場合の試合数100の実行時間はこちら。</p>
 <pre class="shell"><code>$ time npm start
 real    0m1.042s
@@ -1753,7 +1753,7 @@ sys     0m0.103s</code></pre>
 <a class="sourceLine" id="cb44-115" data-line-number="115">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Sally'</span>).<span class="at">start</span>()<span class="op">;</span></a>
 <a class="sourceLine" id="cb44-116" data-line-number="116">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Andy'</span>).<span class="at">start</span>()<span class="op">;</span></a>
 <a class="sourceLine" id="cb44-117" data-line-number="117"><span class="op">}</span></a></code></pre></div>
-<p>○○プログラミング最高！　○○プログラミング以外のやり方は○○プログラミングじゃないからダメ……という考え方は、やっぱりダメなのでしょうな。</p>
+<p>○○プログラミング最高！　○○プログラミング以外のやり方は○○プログラミングじゃないからダメ……という考え方は、やっぱりダメなのでしょうな。 p</p>
 <section class="footnotes">
 <hr />
 <ol>
