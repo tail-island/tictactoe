@@ -718,7 +718,7 @@ border-color: #4078c0;
 <a class="sourceLine" id="cb5-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">  <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`</span><span class="sc">${</span> xs <span class="sc">}</span><span class="vs"> == 0,0,0,0,0,0,0,0,0,0です`</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="op">}</span></a></code></pre></div>
-<p><code>xs = [0, 0, 0]</code>ならば再代入なのでエラーになってくれますけど、<code>xs[0] = 0</code>は<code>xs</code>そのものへの再代入ではないのでエラーになってくれません。</p>
+<p><code>xs = [0, 0, 0]</code>ならば再代入なのでエラーになってくれますけど、<code>xs[0] = 0</code>は<code>xs</code>そのものへの再代入ではないのでエラーになってくれないんです。</p>
 <p>関数呼び出しのときにも、同じことが言えます。以下のコードなら<code>foo()</code>の中を見ないでも安心して<code>x</code>を使えますけど、</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">const</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
