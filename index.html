@@ -1246,7 +1246,7 @@ console.log(map(filter(developers,
 <h2>関数の組み合わせで、楽をしましょう</h2>
 <p>いいえ、まだ完成ではありません。先程紹介した<code>filter</code>や<code>map</code>、<code>reduce</code>は関数型プログラミング由来の機能なので、これらの機能を使うだけでも関数型プログラミングと言える気がしますし、プログラミングはとても容易になりますけど。</p>
 <p>でも、関数を引数にするということには、もっと大きな可能性があるんです。この可能性を捨てちゃうのは、ちょっともったいないでしょう。</p>
-<p>先程のコードを、もう一度眺めてみてください。ラムダ式の中は普通にコードを書いていますよね？　この部分も、関数を引数に取る関数で楽できないでしょうか？</p>
+<p>先程のコードを、もう一度眺めてみてください。ラムダ式の中は普通にコードを書いていますよね？　この部分も、関数を引数に取ったり関数を返したりする関数で楽できないでしょうか？</p>
 <p>具体的にやります。<code>GameState.nextPlayer()</code>で考えましょう。</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" data-line-number="1">get <span class="at">nextPlayer</span>() <span class="op">{</span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="cf">return</span> <span class="kw">this</span>.<span class="va">board</span>.<span class="at">filter</span>(cell <span class="op">=&gt;</span> cell <span class="op">==</span> <span class="dv">0</span>).<span class="at">size</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">?</span> <span class="dv">1</span> : <span class="dv">2</span><span class="op">;</span></a>
