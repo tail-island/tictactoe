@@ -643,10 +643,10 @@ border-color: #4078c0;
 <p>私は昔、大量にコピー＆ペーストしてコードを作成していました。forループの中の条件式がちょっと違うんだよなぁ、とか、<code>x</code>には<code>width</code>で<code>y</code>には<code>height</code>で処理しなければならないんだよなぁ、とかという場合です。重複が発生して嫌な臭いが漂ってくるんですけど、でもこれはどうにもならないんだと諦めていました。</p>
 <p>もしこの重複をゼロにできるなら、嬉しいと思いませんか？　関数という小さな要素を組み合わせて関数を作成していく関数型プログラミングは、この重複を極限まで減らしてくれるんです。</p>
 <hr />
-<p>もし上の提案を魅力的だと思ったら、お暇な時に本稿を読んでみてください。使用するプログラミング言語は多くの方に馴染みがあるだろうJavaScript（実行環境はNode.js。文法はECMAScript 2017）なので、ご安心を。Haskellのような関数型プログラミング言語を使用しなくても、今時の言語ならかなりのところまで関数型プログラミングできるんです。あなたが次のプロジェクトで使おうとしている、そのプログラミング言語でも。</p>
-<h2>副作用は悪です。根絶のために、昔から様々な工夫がなされてきました</h2>
+<p>もし上の提案を魅力的だと思ったなら、お暇な時に本稿を読んでみてください。使用するプログラミング言語は多くの方に馴染みがあるだろうJavaScript（実行環境はNode.js。文法はECMAScript 2017）なので、ご安心を。Haskellのような関数型プログラミング言語を使用しなくても、今時の言語ならかなりのところまで関数型プログラミングできるんです。たぶん、あなたが次のプロジェクトで使おうとしている、そのプログラミング言語でも。</p>
+<h2>副作用は悪。被害を減らすために、昔から様々な工夫がなされてきました</h2>
 <p>大昔、私が初めてコンピューターに触ったころ、マイコン（マイクロ・コンピューター）からパソコン（パーソナル・コンピューター）に名前が変わり始めたころは、プログラミングはBASICという言語でやるものでした。このBASICって、今考えると信じられないのですけど、グローバル変数しかなかったんですよ。サブ・ルーチンで何か計算をしたら、その計算結果はグローバル変数に入れるしかなくて、だから、どのサブ・ルーチンがどの変数を変更するのかの対応表を頭の中においてプログラミングしていました。</p>
-<p>実は、近代プログラミング言語であるJavaScriptでも、<code>var</code>や<code>const</code>や<code>let</code>で修飾しなければ、グローバルな変数になります<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
+<p>実は、近代プログラミング言語であるJavaScriptでも、<code>var</code>や<code>const</code>や<code>let</code>で修飾しなければ、グローバルな変数になるんです<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&lt;!</span>DOCTYPE html<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&lt;</span>html<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="op">&lt;</span>head<span class="op">&gt;</span></a>
@@ -666,8 +666,8 @@ border-color: #4078c0;
 <a class="sourceLine" id="cb1-17" data-line-number="17">    &lt;/script<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-18" data-line-number="18">  &lt;/body<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-19" data-line-number="19">&lt;/html<span class="op">&gt;</span></a></code></pre></div>
-<p>上のコード、グローバル変数をループのカウンターに使用していて、そのグローバル変数のカウンターを<code>foo</code>の中で変更していますから、ループの実行回数は1回だけ、しかも「1000回fooしました」と表示されてしまいます。大昔は、こんなプログラミング言語ばっかりだったんですよ。</p>
-<p>こんな状態じゃあとてもプログラムなんか書いてられないので、関数内でだけ使える変数ってのが生まれました。JavaScriptでは、<code>var</code>を付けるとその変数のスコープ（有効範囲）は関数内のみになります（関数の外側で宣言されれば、グローバル変数ですけど）。しかし、<code>var</code>をつけていても、以下のような場合には混乱が発生しました。</p>
+<p>上のコードはグローバル変数をループのカウンターとして使用していて、そのグローバル変数のカウンターを<code>foo</code>の中で変更していますから、ループの実行回数は1回だけ、しかも「1000回fooしました」と表示されてしまいます。大昔は、こんなプログラミング言語ばっかりだったんですよ。</p>
+<p>こんな状態じゃあとてもプログラムなんか書いてられないので、関数内でだけ使える変数ってのが生まれたわけです。JavaScriptの場合は、<code>var</code>を付けるとその変数のスコープ（有効範囲）は関数内のみになります（関数の外側で宣言されれば、グローバル変数ですけど）。しかし、<code>var</code>をつけていても、以下のような場合には混乱が発生しました。</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">function</span> <span class="at">foo</span>() <span class="op">{</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">var</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"></a>
@@ -718,7 +718,7 @@ border-color: #4078c0;
 <a class="sourceLine" id="cb5-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">  <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`</span><span class="sc">${</span> xs <span class="sc">}</span><span class="vs"> == 0,0,0,0,0,0,0,0,0,0です`</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="op">}</span></a></code></pre></div>
-<p><code>xs = [0, 0, 0]</code>ならば再代入なのでエラーになりますけど、<code>xs[0] = 0</code>は<code>xs</code>そのものへの再代入ではないのでエラーになってくれません。</p>
+<p><code>xs = [0, 0, 0]</code>ならば再代入なのでエラーになってくれますけど、<code>xs[0] = 0</code>は<code>xs</code>そのものへの再代入ではないのでエラーになってくれません。</p>
 <p>関数呼び出しのときにも、同じことが言えます。以下のコードなら<code>foo()</code>の中を見ないでも安心して<code>x</code>を使えますけど、</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">const</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
@@ -964,8 +964,8 @@ border-color: #4078c0;
 <a class="sourceLine" id="cb9-220" data-line-number="220">     <span class="op">}</span></a>
 <a class="sourceLine" id="cb9-221" data-line-number="221">  <span class="op">}</span></a>
 <a class="sourceLine" id="cb9-222" data-line-number="222"><span class="op">}</span></a></code></pre></div>
-<p>えっと、長くてごめんなさい。ともあれ、これで絶対に負けない三目並べが完成しました。Node.jsをインストール済みの人は、GitHubからコードをクローンして試してみてください。あなたがどれだけ優秀な三目並べ屋だとしても、このプログラムは絶対に負けないはず……なのですけど、バグがあって負けちゃったらこっそり教えてください。</p>
-<p>で、コード中のコメントに書きましたけど、メソッドの中ではイミュータブル「ではない」変数がいっぱいですね。あと、なんだか<code>for</code>文の中身が似ている場合が多い気もします。<code>GameState.vacantCellCount</code>の<code>for</code>文と<code>GameState.winner</code>の内側の<code>for</code>文とか。</p>
+<p>えっと、長くてごめんなさい。ともあれ、これで絶対に負けない三目並べが完成しました。Node.jsをインストール済みの人は、GitHubからコードをクローンして試してみてください。あなたがどれだけ優秀な三目並べ屋だとしても、このプログラムは絶対に負けないはず……なのですけど、もしバグがあって負けちゃったらこっそり教えてください。</p>
+<p>で、コード中のコメントにも書きましたけど、メソッドの中にイミュータブル「ではない」変数がいっぱいですね。あと、なんだか<code>for</code>文の中身が似ている場合が多い気もします。<code>GameState.vacantCellCount</code>の<code>for</code>文と<code>GameState.winner</code>の内側の<code>for</code>文とか。</p>
 <h2>集合に対する操作は、ライブラリ化できます</h2>
 <p>まぁもっとも、先程のコードは、Immutable.jsの人が見たら激怒しちゃうような悪いコードなんですけどね。</p>
 <p>例えば<code>GameState.vacantCellCount()</code>は、Immutable.jsの<code>List</code>の<code>filter()</code>メソッドとラムダ式を使用して、以下のような書き方をすべきでしょう。</p>
@@ -1076,7 +1076,7 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb16-13" data-line-number="13">                   (totalSalary<span class="op">,</span> developer) <span class="op">=&gt;</span> totalSalary <span class="op">+</span> <span class="va">developer</span>.<span class="at">salary</span><span class="op">,</span></a>
 <a class="sourceLine" id="cb16-14" data-line-number="14">                   <span class="dv">0</span>))<span class="op">;</span></a></code></pre></div>
 <p>あとは、集合の1番目の要素を取得するための<code>first()</code>や2番目から最後までを取得する<code>rest()</code>とか（再帰で１つづつ処理したい場合などに便利。ラブラリによっては、名前が<code>head()</code>と<code>tail()</code>だったり<code>car</code>と<code>cdr</code>だったりします）、すべての要素が条件を満たすかを調べる<code>every()</code>や一個でも条件を満たす要素があるかを調べる<code>some()</code>なんてのもあります（ライブラリによっては、名前が<code>all()</code>と<code>some()</code>だったりします）。</p>
-<p>と、ここまで書いたところで気がついたのですけど、先程書き直した<code>GameState.vacantCellCount()</code>、これは不要ですね。<code>vacantCellCount</code>を呼び出している箇所は2箇所あって、ゲームが終了しているか否かを判断する<code>GameState.winner()</code>の後半と次のプレイヤーを決める<code>GameState.nextPlayer()</code>ところ。で、ゲームが終了しているか否かを判断するには値が0のセルが1つでもあればよくて（<code>some()</code>だけでよい）、次のプレイヤーを決めるには値が0のセルの数を最後まで調べなければならない（<code>filter()</code>して<code>size</code>を調べないとダメ）。<code>GameState.winner()</code>の場合に、<code>GameState.vacantCellCount()</code>だと余計な処理をしちゃっていたんですね。</p>
+<p>と、ここまで書いたところで気がついたのですけど、先程書き直した<code>GameState.vacantCellCount()</code>、これは不要でしたね。<code>vacantCellCount</code>を呼び出している箇所は2箇所あって、ゲームが終了しているか否かを判断する<code>GameState.winner()</code>の後半と次のプレイヤーを決める<code>GameState.nextPlayer()</code>。で、ゲームが終了しているか否かを判断するには値が0のセルが1つでもあればよくて（<code>some()</code>だけでよい）、次のプレイヤーを決めるには値が0のセルの数を最後まで調べなければならない（<code>filter()</code>して<code>size</code>を調べないとダメ）。<code>GameState.winner()</code>の場合に、<code>GameState.vacantCellCount()</code>だと余計な処理をしちゃっていたんですね。</p>
 <p>というわけで、書き直し。</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" data-line-number="1">get <span class="at">winner</span>() <span class="op">{</span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">  <span class="kw">const</span> winningLines <span class="op">=</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">6</span>)<span class="op">,</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">7</span>)<span class="op">,</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="dv">2</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">8</span>)<span class="op">,</span>  <span class="co">// 縦</span></a>
@@ -1241,7 +1241,7 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb18-129" data-line-number="129">    <span class="va">I</span>.<span class="at">Repeat</span>(<span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="kw">new</span> <span class="at">HumanPlayer</span>()<span class="op">,</span> <span class="kw">new</span> <span class="at">ComputerPlayer</span>())).<span class="at">flatten</span>(<span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb18-130" data-line-number="130">  )<span class="op">;</span></a>
 <a class="sourceLine" id="cb18-131" data-line-number="131"><span class="op">}</span></a></code></pre></div>
-<p>やりました！　完全にイミュータブルです。かなり短くなって、しかも、分かりやすくなりましたし。Immutable.jsすげぇ！<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p>やりました！　完全にイミュータブルです。短くなったし、分かりやすくなったし。Immutable.jsすげぇ！<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 <p>というわけで、これで完成かな？</p>
 <h2>関数の組み合わせで、楽をしましょう</h2>
 <p>いいえ、まだ完成ではありません。先程紹介した<code>filter</code>や<code>map</code>、<code>reduce</code>は関数型プログラミング由来の機能なので、これらの機能を使うだけでも関数型プログラミングと言える気がしますし、プログラミングはとても容易になりますけど。</p>
@@ -1297,20 +1297,20 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb25-4" data-line-number="4">  <span class="co">// R.equals(a, b)の1つ目の引数だけ指定して、残りの1つを受け取る関数にします。</span></a>
 <a class="sourceLine" id="cb25-5" data-line-number="5">  <span class="cf">return</span> <span class="kw">this</span>.<span class="va">board</span>.<span class="at">filter</span>(<span class="va">R</span>.<span class="at">equals</span>(<span class="dv">0</span>)).<span class="at">size</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">?</span> <span class="dv">1</span> : <span class="dv">2</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb25-6" data-line-number="6"><span class="op">}</span></a></code></pre></div>
-<p>うん、スッキリしました。でも、たとえば、</p>
+<p>うん、これでスッキリしました。でも、たとえば、</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">const</span> winner <span class="op">=</span> winningLines</a>
 <a class="sourceLine" id="cb26-2" data-line-number="2">  .<span class="at">map</span>(line <span class="op">=&gt;</span> <span class="va">line</span>.<span class="at">map</span>(index <span class="op">=&gt;</span> <span class="kw">this</span>.<span class="va">board</span>.<span class="at">get</span>(index)))</a>
 <a class="sourceLine" id="cb26-3" data-line-number="3">  <span class="co">// セルの値の集合の残りが1つ目とすべて同じ場合、かつ、1つ目が0でない集合を取得します。</span></a>
 <a class="sourceLine" id="cb26-4" data-line-number="4">  .<span class="at">filter</span>(cells <span class="op">=&gt;</span> <span class="va">cells</span>.<span class="at">rest</span>().<span class="at">every</span>(cell <span class="op">=&gt;</span> cell <span class="op">==</span> <span class="va">cells</span>.<span class="at">first</span>()) <span class="op">&amp;&amp;</span> <span class="va">cells</span>.<span class="at">first</span>() <span class="op">!=</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb26-5" data-line-number="5">  .<span class="at">map</span>(cells <span class="op">=&gt;</span> <span class="va">cells</span>.<span class="at">first</span>())</a>
 <a class="sourceLine" id="cb26-6" data-line-number="6">  .<span class="at">first</span>()<span class="op">;</span></a></code></pre></div>
-<p>の<code>cells =&gt; ... &amp;&amp; cells.first() != 0</code>の部分、「1つ目が0でない」の部分は、カリー化だけじゃ対応できませんよね？　「集合の1つ目の値を取得する」と「値が0であることを確認する」の2段階に分かれているわけですから。こんな場合は、関数合成と呼ばれる技術を使用します。関数合成というのは、「g(f(x))」を「f∘g」と書く、書いた順序と実行される順序が異なるのでちょっと気持ち悪いアレです。コードにすると、こんな感じ。</p>
+<p>の<code>cells =&gt; ... &amp;&amp; cells.first() != 0</code>の部分、「1つ目が0でない」の部分は、カリー化だけじゃ対応できませんよね？　処理が「集合の1つ目の値を取得する」と「値が0であることを確認する」の2段階に分かれているわけですから。こんな場合は、関数合成と呼ばれるテクニックを使用しましょう。関数合成というのは、「f(g(x))」を「f∘g」と書くアレです。コードにすると、こんな感じ。</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">function</span> <span class="at">compose</span>(f<span class="op">,</span> g) <span class="op">{</span></a>
 <a class="sourceLine" id="cb27-2" data-line-number="2">  <span class="cf">return</span> (x) <span class="op">=&gt;</span> <span class="at">f</span>(<span class="at">g</span>(x))<span class="op">;</span></a>
 <a class="sourceLine" id="cb27-3" data-line-number="3"><span class="op">}</span></a>
 <a class="sourceLine" id="cb27-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb27-5" data-line-number="5"><span class="va">console</span>.<span class="at">log</span>(<span class="at">compose</span>(<span class="va">R</span>.<span class="at">multiply</span>(<span class="dv">2</span>)<span class="op">,</span> <span class="va">R</span>.<span class="at">add</span>(<span class="dv">2</span>))(<span class="dv">1</span>))<span class="op">;</span>  <span class="co">// 6が表示されます。(1 + 2) * 2 = 6なので。後述するpipeなら、1 * 2 + 2で4が表示されます。</span></a></code></pre></div>
-<p>このcomposeを使えば、<code>cells.first() != 0</code>の部分は<code>compose(R.complement(R.equals(0)), R.head)</code>と書けます（Ramdaでは<code>first</code>ではなくて<code>head</code>。<code>complement()</code>は、真偽を逆転させた関数を返します。<code>complement()</code>すると<code>x == 0</code>が<code>!(x == 0)</code>になります）。あと、Ramdaには、<code>pipe()</code>という書いた順と実行順序が同じになる素敵バージョンの関数合成もあります。</p>
+<p><code>compose()</code>を使えば、<code>cells.first() != 0</code>の部分は<code>compose(R.complement(R.equals(0)), R.head)</code>と書けます（Ramdaでは<code>first</code>ではなくて<code>head</code>。<code>complement()</code>は、真偽を逆転させた関数を返します。<code>complement()</code>すると<code>x == 0</code>が<code>!(x == 0)</code>になります）。あと、Ramdaには、<code>pipe()</code>という書いた順と実行順序が同じになる素敵バージョンの関数合成もあります。</p>
 <p>というわけで、Ramdaを使用して<code>GameState.winner()</code>を書き直してみましょう。</p>
 <pre class="javascripot"><code>// 関数合成！
 const f = R.pipe(R.map(R.map(R.nth(R.__, gameState.board))),  // R.__は、この部分をとばして引数を設定するようにとの指示。
@@ -1322,7 +1322,7 @@ const f = R.pipe(R.map(R.map(R.nth(R.__, gameState.board))),  // R.__は、こ�
 
 // 呼び出し。
 return f(winningLines);</code></pre>
-<p>あれ？　<code>winningLines...first()</code>の部分だけじゃなくて、その後の<code>if</code>分や三項演算子の部分まで書けちゃった……。関数合成でプログラムを組むのがあまりに楽ちん<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>だったもんで、勢い余っちゃいましたよ。</p>
+<p>あれ？　<code>winningLines...first()</code>の部分だけじゃなくて、その後の<code>if</code>文や三項演算子の部分まで書いちゃった……。関数合成でプログラムを組むのがあまりに楽ちん<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>だったもんで、勢い余っちゃいましたよ。</p>
 <p>でも、関数合成と呼び出しと引数の設定を一度にできたら、もっと楽になるような気がします（ECMAScriptで提案されているパイプライン演算子（<code>|&gt;</code>）みたいな感じ）。Ramdaを使う場合は、以下の書き方で似た機能を実現できます（<code>R.always</code>は、どんな引数で呼ばれても指定した値を返す関数を返す関数です）。</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="va">R</span>.<span class="at">call</span>(<span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">always</span>(引数)<span class="op">,</span></a>
 <a class="sourceLine" id="cb29-2" data-line-number="2">              f1<span class="op">,</span></a>
@@ -1375,9 +1375,9 @@ return f(winningLines);</code></pre>
 <a class="sourceLine" id="cb37-11" data-line-number="11">                     getDiagonals])<span class="op">,</span></a>
 <a class="sourceLine" id="cb37-12" data-line-number="12">             <span class="va">R</span>.<span class="at">apply</span>(<span class="va">R</span>.<span class="at">concat</span>))<span class="op">;</span></a>
 <a class="sourceLine" id="cb37-13" data-line-number="13"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
-<p>3×3のゲーム板に限定しているので汎用性がないへっぽこなコードなのですけど、いきなり数字の羅列を書くより仕様が明確になったと考えます。……やり過ぎの気もするけどな。でも、関数型プログラミングをやっていると、「○○は××である」が不明確なところがあると落ち着かなくなるんですよ。</p>
+<p>3×3のゲーム板に限定しているので汎用性がないへっぽこなコードなのですけど、いきなり数字の羅列を書くより仕様が明確になったと考えます。……正直、やり過ぎの気もするけどな。でも、関数型プログラミングをやっていると、「○○は××である」が不明確なところがあると落ち着かなくなるんですよ。</p>
 <h2>汎用的なデータ構造でやりましょう</h2>
-<p>これで最後。関数の話のあとは、データの話です。今回使用しているJavaScriptはとても面白い言語で、連想記憶をオブジェクトで表現します（ECMAScript 2015ではMapが追加されましたけど）。</p>
+<p>これで最後。関数の話のあとは、データの話です。今回使用しているJavaScriptはとても面白い言語で、連想記憶をオブジェクトで表現します（ECMAScript 2015では連想記憶を表現するMapが追加されましたけど）。</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">class</span> Computer <span class="op">{</span></a>
 <a class="sourceLine" id="cb38-2" data-line-number="2">  <span class="at">constructor</span>(name<span class="op">,</span> memorySizeInGB) <span class="op">{</span></a>
 <a class="sourceLine" id="cb38-3" data-line-number="3">    <span class="kw">this</span>.<span class="at">name</span> <span class="op">=</span> name<span class="op">;</span></a>
@@ -1414,9 +1414,9 @@ return f(winningLines);</code></pre>
 <a class="sourceLine" id="cb38-34" data-line-number="34"><span class="co">// オブジェクト的にアクセスしてみます。</span></a>
 <a class="sourceLine" id="cb38-35" data-line-number="35"><span class="va">console</span>.<span class="at">log</span>(o[<span class="dv">0</span>].<span class="at">computers</span>[<span class="dv">0</span>].<span class="at">name</span>)<span class="op">;</span>        <span class="co">// 「MacBook Pro」が表示されます。</span></a>
 <a class="sourceLine" id="cb38-36" data-line-number="36"><span class="va">console</span>.<span class="at">log</span>(m[<span class="dv">0</span>].<span class="at">computers</span>[<span class="dv">0</span>].<span class="at">name</span>)<span class="op">;</span>        <span class="co">// 「MacBook Pro」が表示されます。</span></a></code></pre></div>
-<p>で、前章で考えたように、組み合わせることを考えれば、オブジェクトのメソッドよりも関数を使用したほうが得。で、メソッドがないのだとしたら、オブジェクトと連想記憶にはあまり差がなくて、だったらわざわざクラスを定義しなくてもいいんじゃね？　オブジェクトの属性がカプセル化されずに公開されることになりますけど、副作用が無いのだから問題は無いしね。なにより、汎用的な集合操作の関数群で処理を記述できる利便性は捨てがたい<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>。</p>
-<p>というわけで、関数型プログラマーは、言語が提供する型、リストやマップで多くの事柄を表現しちゃいます（Haskellの人には型を追加して数学的な特性を定義してカッチリやるのが好きな人もいるかもしれませんけど、私はHaskellerじゃなくてClojurianなので……）。だからたとえば、<code>x</code>と<code>y</code>を持つ<code>Point</code>クラスを作成する代わりに、要素数が2つのリストで座標を表現しちゃいます。<code>Point</code>のメソッドとして幾何計算の機能を追加していくのではなくて、汎用的なベクトル演算の関数群を作成して幾何計算をやります。</p>
-<p>本稿でも、クラスを定義しないで、あと、先程から紹介してきたRamdaを利用して三目並べを組み直してみましょう。というわけで、以下が最終的なコード。</p>
+<p>で、前章で考えたように、組み合わせることを考えれば、オブジェクトのメソッドよりも関数を使用したほうが得。で、メソッドがないのだとしたらオブジェクトと連想記憶にはあまり差がなくて、だったらわざわざクラスを定義しなくてもいいんじゃね？　オブジェクトの属性がカプセル化されずに公開されることになりますけど、副作用が無いのだから問題は無いしね。なにより、汎用的な集合操作の関数群で処理を記述できる利便性は捨てがたい<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>。</p>
+<p>というわけで、関数型プログラマーは、言語が提供する型、リストやマップで多くの事柄を表現しちゃいます（Haskellの人には型を追加して数学的な特性を定義してカッチリやるのが好きな人もいるかもしれませんけど、私はHaskellerじゃなくてClojurianなので……）。だからたとえば、<code>x</code>と<code>y</code>を持つ<code>Point</code>クラスを作成する代わりに、要素数が2つのリストで座標を表現しちゃいます。<code>Point</code>のメソッドとして幾何計算の機能を追加していくのではなくて、汎用的な行列演算の関数群を作成して幾何計算をやるのです。</p>
+<p>本稿でも、クラスを定義しないで、あと、先程から紹介してきたRamdaを利用して三目並べを組み直してみましょう。というわけで、以下が最終的なコードです。</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="im">import</span> process  <span class="im">from</span> <span class="st">'process'</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb39-2" data-line-number="2"><span class="im">import</span> R        <span class="im">from</span> <span class="st">'ramda'</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb39-3" data-line-number="3"><span class="im">import</span> readline <span class="im">from</span> <span class="st">'readline'</span><span class="op">;</span></a>
@@ -1600,9 +1600,8 @@ return f(winningLines);</code></pre>
 <a class="sourceLine" id="cb39-181" data-line-number="181"><span class="op">}</span></a></code></pre></div>
 <p>RamdaがECMAScriptのイテレーターを扱えなかったので最後の<code>tictactoe()</code>がかなり不細工（イテレーターは<code>next()</code>で内部状態が変わるのでイミュータブルじゃないし）ですけど、それ以外の部分は、重複のない、（関数型プログラミングの関数名に慣れていれば）読みやすいコードになったのではないでしょうか？</p>
 <h2>パフォーマンス？　良くはないです。でも、それほど悪くは無いです</h2>
-<p>おまけとして、敢えて触れずに来たパフォーマンスの話題を。関数型プログラミングで作成したプログラムの実行速度は、ぶっちゃけ遅いです。オブジェクトを変更するとコピーが作られるんですからね（最初から関数型として作成されたプログラミング言語なら、うまいこと差分管理されてコピーは作られないのですけど）。</p>
-<p>ともあれ、試してみましょう。コンピューター対コンピューターで100試合繰り返すのにかかった時間を、私のMacBook Pro（2017 TouchBar<em>非</em>搭載モデル。ヘッポコCPU）で調べてみました。</p>
-<h3>コンピューター対コンピューター、試合数100</h3>
+<p>おまけとして、敢えて触れずに来たパフォーマンスの話題を。関数型プログラミングで作成したプログラムの実行速度は、ぶっちゃけ遅いです。オブジェクトを変更するとコピーが作られてしまうんですからね（最初から関数型として作成されたプログラミング言語なら、うまいこと差分管理されてコピーは作られなかったりするのですけど）。</p>
+<p>ともあれ、試してみましょう。コンピューター対コンピューターで100試合繰り返すのにかかった時間を、私のMacBook Pro（2017 TouchBar<em>非</em>搭載モデル）で調べてみました。</p>
 <ul>
 <li>関数型プログラミング</li>
 </ul>
@@ -1614,9 +1613,9 @@ sys     0m0.404s</code></pre>
 <li>オブジェクト指向プログラミング（集合操作はfor文）</li>
 </ul>
 <pre class="shell"><code>$ time npm start
-real    0m0.851s
-user    0m1.010s
-sys     0m0.108s</code></pre>
+real    0m22.737s
+user    0m23.289s
+sys     0m0.710s</code></pre>
 <ul>
 <li>オブジェクト指向プログラミング（集合操作はImmutable.js）</li>
 </ul>
@@ -1624,160 +1623,137 @@ sys     0m0.108s</code></pre>
 real    1m55.251s
 user    2m57.125s
 sys     0m5.720s</code></pre>
-<p>うわぁ、関数型プログラミングすげー遅い<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。<code>for</code>文の3%くらいの速度？　<code>for</code>文がすげー速いのは、たぶん、JITで最適化し易いからでしょうね。だって、1試合だけの勝負にしたら、以下の結果になりましたから。。</p>
-<h3>コンピューター対コンピューター、試合数1</h3>
-<ul>
-<li>関数型プログラミング</li>
-</ul>
-<pre class="shell"><code>$ time npm start
-real    0m1.196s
-user    0m1.489s
-sys     0m0.105s</code></pre>
-<ul>
-<li>オブジェクト指向プログラミング（集合操作はfor文）</li>
-</ul>
-<pre class="shell"><code>$ time npm start
-real    0m0.844s
-user    0m1.002s
-sys     0m0.104s</code></pre>
-<ul>
-<li>オブジェクト指向プログラミング（集合操作はImmutable.js）</li>
-</ul>
-<pre class="shell"><code>$ time npm start
-real    0m1.888s
-user    0m2.720s
-sys     0m0.178s</code></pre>
-<p>うん、<code>for</code>文の71%くらいですね（npmやnodeの起動時間を考えれば、実際はもっと低いのでしょうけど）。ただ、実際に動かしてみるとほとんど差を感じないので、問題ないんじゃないかな。</p>
-<h3>メモ化が有効な場合は多いしね</h3>
-<p>今回のコードではあまり効いていない（アルファ・ベータ法による枝刈りが有効すぎた）のですけど、作成したコードには「関数型プログラミングならでは」の高速化テクニックを入れています。<code>getWinner</code>や<code>getNextPlayer</code>、<code>getNextBoards</code>のところに書いてある<code>R.memoize()</code>です。</p>
+<p>関数型プログラミングの実行速度って、良くはないけど悪すぎるわけではない感じ<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。<code>for</code>文の71%くらいの速度でした。</p>
+<h3>メモ化が有効な場合も多いしね</h3>
+<p>今回のコードではあまり有効ではなかった（アルファ・ベータ法による枝刈りが効きすぎた）のですけど、実は今回のコードには関数型プログラミングらしい高速化テクニックを入れています。<code>getWinner</code>や<code>getNextPlayer</code>、<code>getNextBoards</code>のところに書いてある<code>R.memoize()</code>です。</p>
 <p>考えてみましょう。副作用がなければ、同じ関数を同じ引数で呼び出した場合の戻り値は必ず同じになります。過去に計算した結果を覚えておけば、再度計算する必要なんかないわけ。これがメモ化と呼ばれるテクニックで、<code>R.memoize()</code>は、このメモ化を実現してくれる（引数と結果の対応表をメモリ内に作成して、関数を実行する代わりにその表の値を自動で返してくれる関数を作成する）関数なんです。</p>
 <p>あとね、そもそもね、同じゲーム板での最適手は毎回同じなわけで、だったら先程のベンチマークみたいに複数回ゲームが実行されると分かっているなら、<code>getNextBoardByComputer()</code>を<code>R.memoize()</code>しちゃえばよい<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>。というわけで、<code>getNextBoardByComputer()</code>を<code>R.memoize()</code>した場合の試合数100の実行時間はこちら。</p>
 <pre class="shell"><code>$ time npm start
 real    0m1.042s
 user    0m1.301s
 sys     0m0.103s</code></pre>
-<p>おお、<code>for</code>文の82%くらいになりました。これなら、問題はないですよね？</p>
+<p>おお、<code>for</code>文の「にせんぱーせんと」の実行速度になりました。これなら問題ないですよね？　もし問題があるなら、試合回数を増やすことでいくらでも数字を大きくできますけど……。</p>
 <h2>関数型もいいけど、オブジェクト指向もね</h2>
-<p>もう1つおまけを。実は最初は、敢えてオブジェクト指向が得意とするシミュレーションをお題にしてやろうと考えていたんですよ。で、オブジェクト指向言語の元祖であるSimulaのWikipediaのページに載っていた試着室シミュレーションを、JavaScriptを使ってオブジェクト指向で組んでみたんです。そしてそのコードを関数型に書き換えようとしたらもー全然うまくいかなかったので途中で投げ出して三目並べにしたというわけ。「オブジェクトが相互にメッセージ・パッシングすることで状態が変わっていく」みたいな場合は、オブジェクト指向は無敵な気がします。</p>
+<p>もう1つおまけを。実は最初は、オブジェクト指向の得意分野であるシミュレーションをお題にしようと考えていたんですよ。で、オブジェクト指向言語の元祖であるSimulaのWikipediaのページに載っていた試着室シミュレーションを、JavaScriptを使ってオブジェクト指向で組んだんです。そしてそのコードを関数型に書き換えようとしたらもー全然うまくいかなかったので途中で投げ出して三目並べにしたというわけ。「オブジェクトが相互にメッセージ・パッシングすることで状態が変わっていく」みたいな場合、オブジェクト指向は無敵な気がします。</p>
 <p>でも、私が関数型プログラミングの能力を引き出せていないだけの気もするし……。どなたか、以下のコードを関数型プログラミングで書き直していただけないでしょうか？</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="im">import</span> util <span class="im">from</span> <span class="st">'util'</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="co">// オブジェクト指向で作成した、試着室とお客様のシミュレーション。</span></a>
-<a class="sourceLine" id="cb47-4" data-line-number="4"><span class="co">// 元ネタはhttps://ja.wikipedia.org/wiki/Simulaのシミュレーションの部分。</span></a>
-<a class="sourceLine" id="cb47-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb47-6" data-line-number="6"><span class="co">// ボックス・ミューラー法でひたすら正規乱数を生成するジェネレーター。</span></a>
-<a class="sourceLine" id="cb47-7" data-line-number="7"><span class="kw">const</span> normalRandomGenerator <span class="op">=</span> <span class="kw">function</span><span class="op">*</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-8" data-line-number="8">  <span class="cf">while</span> (<span class="kw">true</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-9" data-line-number="9">    <span class="kw">const</span> x <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> <span class="va">Math</span>.<span class="at">random</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-10" data-line-number="10">    <span class="kw">const</span> y <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> <span class="va">Math</span>.<span class="at">random</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb47-12" data-line-number="12">    <span class="kw">yield</span> <span class="va">Math</span>.<span class="at">sqrt</span>(<span class="op">-</span><span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">log</span>(x)) <span class="op">*</span> <span class="va">Math</span>.<span class="at">cos</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">PI</span> <span class="op">*</span> y)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-13" data-line-number="13">    <span class="kw">yield</span> <span class="va">Math</span>.<span class="at">sqrt</span>(<span class="op">-</span><span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">log</span>(x)) <span class="op">*</span> <span class="va">Math</span>.<span class="at">sin</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">PI</span> <span class="op">*</span> y)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-14" data-line-number="14">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-15" data-line-number="15"><span class="op">}</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb47-17" data-line-number="17"><span class="co">// 平均値と標準偏差、最小値、最大値を指定して、正規乱数を1つ生成します。</span></a>
-<a class="sourceLine" id="cb47-18" data-line-number="18"><span class="kw">const</span> normalRandom <span class="op">=</span> (mean <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> std <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> min <span class="op">=</span> <span class="op">-</span><span class="kw">Infinity</span><span class="op">,</span> max <span class="op">=</span> <span class="kw">Infinity</span>) <span class="op">=&gt;</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="va">Math</span>.<span class="at">min</span>(mean <span class="op">+</span> std <span class="op">*</span> <span class="va">normalRandomGenerator</span>.<span class="at">next</span>().<span class="at">value</span><span class="op">,</span> max)<span class="op">,</span> min)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb47-20" data-line-number="20"><span class="co">// 引数で指定したミリ秒の間、コルーチンを止めます。</span></a>
-<a class="sourceLine" id="cb47-21" data-line-number="21"><span class="kw">const</span> delay <span class="op">=</span> <span class="va">util</span>.<span class="at">promisify</span>(setTimeout)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb47-23" data-line-number="23"><span class="co">// シミュレーションを実行します。</span></a>
-<a class="sourceLine" id="cb47-24" data-line-number="24"><span class="im">export</span> <span class="im">default</span> <span class="kw">function</span> <span class="at">execute</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-25" data-line-number="25">  <span class="co">// report()でのレポートは開始時刻からの経過時間でするので、開始時刻を記録しておきます。</span></a>
-<a class="sourceLine" id="cb47-26" data-line-number="26">  <span class="kw">const</span> startingTime <span class="op">=</span> <span class="va">Date</span>.<span class="at">now</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-27" data-line-number="27"></a>
-<a class="sourceLine" id="cb47-28" data-line-number="28">  <span class="co">// 状況をレポートします。</span></a>
-<a class="sourceLine" id="cb47-29" data-line-number="29">  <span class="kw">function</span> <span class="at">report</span>(message) <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-30" data-line-number="30">    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`</span><span class="sc">${</span> ((<span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> startingTime) / <span class="dv">1000</span>).<span class="at">toFixed</span>(<span class="dv">2</span>) <span class="sc">}</span><span class="vs">: </span><span class="sc">${</span> message <span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-31" data-line-number="31">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-32" data-line-number="32"></a>
-<a class="sourceLine" id="cb47-33" data-line-number="33">  <span class="co">// 試着室。</span></a>
-<a class="sourceLine" id="cb47-34" data-line-number="34">  <span class="kw">class</span> FittingRoom <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-35" data-line-number="35">    <span class="co">// コンストラクター。</span></a>
-<a class="sourceLine" id="cb47-36" data-line-number="36">    <span class="at">constructor</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-37" data-line-number="37">      <span class="kw">this</span>.<span class="at">hasUsed</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb47-38" data-line-number="38">      <span class="kw">this</span>.<span class="at">requestQueue</span> <span class="op">=</span> []<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-39" data-line-number="39">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-40" data-line-number="40"></a>
-<a class="sourceLine" id="cb47-41" data-line-number="41">    <span class="co">// 試着室に入ります。</span></a>
-<a class="sourceLine" id="cb47-42" data-line-number="42">    async <span class="at">enter</span>() <span class="op">{</span>  <span class="co">// asyncは不要なのですけど、呼び出し側にawaitしてもらいやすいように付けておきます。</span></a>
-<a class="sourceLine" id="cb47-43" data-line-number="43">      <span class="co">// 誰も使っていない場合は、</span></a>
-<a class="sourceLine" id="cb47-44" data-line-number="44">      <span class="cf">if</span> (<span class="op">!</span><span class="kw">this</span>.<span class="at">hasUsed</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-45" data-line-number="45">        <span class="co">// 使用中の札をかけて、</span></a>
-<a class="sourceLine" id="cb47-46" data-line-number="46">        <span class="kw">this</span>.<span class="at">hasUsed</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb47-47" data-line-number="47">        <span class="co">// すぐに入ります。</span></a>
-<a class="sourceLine" id="cb47-48" data-line-number="48">        <span class="cf">return</span> <span class="va">Promise</span>.<span class="at">resolve</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-49" data-line-number="49">      <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-50" data-line-number="50"></a>
-<a class="sourceLine" id="cb47-51" data-line-number="51">      <span class="co">// 試着室が空くのを待つPromiseを作成して、そのresolveを待ち行列に入れておきます。</span></a>
-<a class="sourceLine" id="cb47-52" data-line-number="52">      <span class="co">// このresolveは、leave()で呼び出されます。</span></a>
-<a class="sourceLine" id="cb47-53" data-line-number="53">      <span class="cf">return</span> <span class="kw">new</span> <span class="at">Promise</span>(resolve <span class="op">=&gt;</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-54" data-line-number="54">        <span class="kw">this</span>.<span class="va">requestQueue</span>.<span class="at">push</span>(resolve)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-55" data-line-number="55">      <span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-56" data-line-number="56">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-57" data-line-number="57"></a>
-<a class="sourceLine" id="cb47-58" data-line-number="58">    <span class="co">// 試着室を出ます。</span></a>
-<a class="sourceLine" id="cb47-59" data-line-number="59">    async <span class="at">leave</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-60" data-line-number="60">      <span class="co">// 誰も待っていないなら、</span></a>
-<a class="sourceLine" id="cb47-61" data-line-number="61">      <span class="cf">if</span> (<span class="kw">this</span>.<span class="va">requestQueue</span>.<span class="at">length</span> <span class="op">==</span> <span class="dv">0</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-62" data-line-number="62">        <span class="co">// 使用中の札をもとにもして、</span></a>
-<a class="sourceLine" id="cb47-63" data-line-number="63">        <span class="kw">this</span>.<span class="at">hasUsed</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb47-64" data-line-number="64">        <span class="co">// 終了します。</span></a>
-<a class="sourceLine" id="cb47-65" data-line-number="65">        <span class="cf">return</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb47-66" data-line-number="66">      <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-67" data-line-number="67"></a>
-<a class="sourceLine" id="cb47-68" data-line-number="68">      <span class="co">// 待ち行列の先頭のresolveを呼び出して、enter()の際に作成したPromiseを完了させます。</span></a>
-<a class="sourceLine" id="cb47-69" data-line-number="69">      <span class="kw">this</span>.<span class="va">requestQueue</span>.<span class="at">shift</span>()()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-70" data-line-number="70">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-71" data-line-number="71">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-72" data-line-number="72"></a>
-<a class="sourceLine" id="cb47-73" data-line-number="73">  <span class="co">// 試着室を1つ設置します。</span></a>
-<a class="sourceLine" id="cb47-74" data-line-number="74">  <span class="kw">const</span> fittingRoom <span class="op">=</span> <span class="kw">new</span> <span class="at">FittingRoom</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-75" data-line-number="75"></a>
-<a class="sourceLine" id="cb47-76" data-line-number="76">  <span class="co">// お客様。</span></a>
-<a class="sourceLine" id="cb47-77" data-line-number="77">  <span class="kw">class</span> Customer <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-78" data-line-number="78">    <span class="co">// コンストラクター。</span></a>
-<a class="sourceLine" id="cb47-79" data-line-number="79">    <span class="at">constructor</span>(name) <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-80" data-line-number="80">      <span class="kw">this</span>.<span class="at">name</span> <span class="op">=</span> name<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-81" data-line-number="81">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-82" data-line-number="82"></a>
-<a class="sourceLine" id="cb47-83" data-line-number="83">    <span class="co">// 商品を選びます。平均12分で標準偏差3分の正規乱数分かかるものとします。</span></a>
-<a class="sourceLine" id="cb47-84" data-line-number="84">    async <span class="at">searchItem</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-85" data-line-number="85">      await <span class="at">delay</span>(<span class="at">normalRandom</span>(<span class="dv">12</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">24</span>) <span class="op">*</span> <span class="dv">1000</span>)<span class="op">;</span>  <span class="co">// シミュレーション内の時間は、1分＝1秒とします。</span></a>
-<a class="sourceLine" id="cb47-86" data-line-number="86">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-87" data-line-number="87"></a>
-<a class="sourceLine" id="cb47-88" data-line-number="88">    <span class="co">// 商品を試着します。平均3分で標準偏差1分の正規乱数分かかるものとします。</span></a>
-<a class="sourceLine" id="cb47-89" data-line-number="89">    async <span class="at">useFittingRoom</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-90" data-line-number="90">      await <span class="at">delay</span>(<span class="at">normalRandom</span>( <span class="dv">3</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span>  <span class="dv">6</span>) <span class="op">*</span> <span class="dv">1000</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-91" data-line-number="91">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-92" data-line-number="92"></a>
-<a class="sourceLine" id="cb47-93" data-line-number="93">    <span class="co">// 行動を開始します。</span></a>
-<a class="sourceLine" id="cb47-94" data-line-number="94">    async <span class="at">start</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-95" data-line-number="95">      <span class="cf">while</span> (<span class="kw">true</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb47-96" data-line-number="96">        <span class="co">// 商品を選んで、</span></a>
-<a class="sourceLine" id="cb47-97" data-line-number="97">        await <span class="kw">this</span>.<span class="at">searchItem</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-98" data-line-number="98"></a>
-<a class="sourceLine" id="cb47-99" data-line-number="99">        <span class="co">// フィッティング・ルームに入ろうとします。他の人が使っているなら、空くまで待ちます。</span></a>
-<a class="sourceLine" id="cb47-100" data-line-number="100">        <span class="at">report</span>(<span class="vs">`</span><span class="sc">${</span> <span class="kw">this</span>.<span class="at">name</span> <span class="sc">}</span><span class="vs"> is requesting the fitting room.`</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-101" data-line-number="101">        await <span class="va">fittingRoom</span>.<span class="at">enter</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-102" data-line-number="102"></a>
-<a class="sourceLine" id="cb47-103" data-line-number="103">        <span class="co">// 試着室に入れたら試着をして、</span></a>
-<a class="sourceLine" id="cb47-104" data-line-number="104">        <span class="at">report</span>(<span class="vs">`</span><span class="sc">${</span> <span class="kw">this</span>.<span class="at">name</span> <span class="sc">}</span><span class="vs"> has entered the fitting room.`</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-105" data-line-number="105">        await <span class="kw">this</span>.<span class="at">useFittingRoom</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-106" data-line-number="106"></a>
-<a class="sourceLine" id="cb47-107" data-line-number="107">        <span class="co">// 試着室を出ます。</span></a>
-<a class="sourceLine" id="cb47-108" data-line-number="108">        await <span class="va">fittingRoom</span>.<span class="at">leave</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-109" data-line-number="109">      <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-110" data-line-number="110">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-111" data-line-number="111">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb47-112" data-line-number="112"></a>
-<a class="sourceLine" id="cb47-113" data-line-number="113">  <span class="co">// お客様は3人とします。</span></a>
-<a class="sourceLine" id="cb47-114" data-line-number="114">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Sam'</span>).<span class="at">start</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-115" data-line-number="115">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Sally'</span>).<span class="at">start</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-116" data-line-number="116">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Andy'</span>).<span class="at">start</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb47-117" data-line-number="117"><span class="op">}</span></a></code></pre></div>
-<p>○○プログラミング最高！　○○プログラミング以外はダメ……という考え方は、やっぱりダメなのでしょうな。</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="im">import</span> util <span class="im">from</span> <span class="st">'util'</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="co">// オブジェクト指向で作成した、試着室とお客様のシミュレーション。</span></a>
+<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="co">// 元ネタはhttps://ja.wikipedia.org/wiki/Simulaのシミュレーションの部分。</span></a>
+<a class="sourceLine" id="cb44-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb44-6" data-line-number="6"><span class="co">// ボックス・ミューラー法でひたすら正規乱数を生成するジェネレーター。</span></a>
+<a class="sourceLine" id="cb44-7" data-line-number="7"><span class="kw">const</span> normalRandomGenerator <span class="op">=</span> <span class="kw">function</span><span class="op">*</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-8" data-line-number="8">  <span class="cf">while</span> (<span class="kw">true</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-9" data-line-number="9">    <span class="kw">const</span> x <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> <span class="va">Math</span>.<span class="at">random</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-10" data-line-number="10">    <span class="kw">const</span> y <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> <span class="va">Math</span>.<span class="at">random</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb44-12" data-line-number="12">    <span class="kw">yield</span> <span class="va">Math</span>.<span class="at">sqrt</span>(<span class="op">-</span><span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">log</span>(x)) <span class="op">*</span> <span class="va">Math</span>.<span class="at">cos</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">PI</span> <span class="op">*</span> y)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-13" data-line-number="13">    <span class="kw">yield</span> <span class="va">Math</span>.<span class="at">sqrt</span>(<span class="op">-</span><span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">log</span>(x)) <span class="op">*</span> <span class="va">Math</span>.<span class="at">sin</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">PI</span> <span class="op">*</span> y)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-14" data-line-number="14">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-15" data-line-number="15"><span class="op">}</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb44-17" data-line-number="17"><span class="co">// 平均値と標準偏差、最小値、最大値を指定して、正規乱数を1つ生成します。</span></a>
+<a class="sourceLine" id="cb44-18" data-line-number="18"><span class="kw">const</span> normalRandom <span class="op">=</span> (mean <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> std <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> min <span class="op">=</span> <span class="op">-</span><span class="kw">Infinity</span><span class="op">,</span> max <span class="op">=</span> <span class="kw">Infinity</span>) <span class="op">=&gt;</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="va">Math</span>.<span class="at">min</span>(mean <span class="op">+</span> std <span class="op">*</span> <span class="va">normalRandomGenerator</span>.<span class="at">next</span>().<span class="at">value</span><span class="op">,</span> max)<span class="op">,</span> min)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb44-20" data-line-number="20"><span class="co">// 引数で指定したミリ秒の間、コルーチンを止めます。</span></a>
+<a class="sourceLine" id="cb44-21" data-line-number="21"><span class="kw">const</span> delay <span class="op">=</span> <span class="va">util</span>.<span class="at">promisify</span>(setTimeout)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb44-23" data-line-number="23"><span class="co">// シミュレーションを実行します。</span></a>
+<a class="sourceLine" id="cb44-24" data-line-number="24"><span class="im">export</span> <span class="im">default</span> <span class="kw">function</span> <span class="at">execute</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-25" data-line-number="25">  <span class="co">// report()でのレポートは開始時刻からの経過時間でするので、開始時刻を記録しておきます。</span></a>
+<a class="sourceLine" id="cb44-26" data-line-number="26">  <span class="kw">const</span> startingTime <span class="op">=</span> <span class="va">Date</span>.<span class="at">now</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb44-28" data-line-number="28">  <span class="co">// 状況をレポートします。</span></a>
+<a class="sourceLine" id="cb44-29" data-line-number="29">  <span class="kw">function</span> <span class="at">report</span>(message) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-30" data-line-number="30">    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`</span><span class="sc">${</span> ((<span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> startingTime) / <span class="dv">1000</span>).<span class="at">toFixed</span>(<span class="dv">2</span>) <span class="sc">}</span><span class="vs">: </span><span class="sc">${</span> message <span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-31" data-line-number="31">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb44-33" data-line-number="33">  <span class="co">// 試着室。</span></a>
+<a class="sourceLine" id="cb44-34" data-line-number="34">  <span class="kw">class</span> FittingRoom <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-35" data-line-number="35">    <span class="co">// コンストラクター。</span></a>
+<a class="sourceLine" id="cb44-36" data-line-number="36">    <span class="at">constructor</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-37" data-line-number="37">      <span class="kw">this</span>.<span class="at">hasUsed</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb44-38" data-line-number="38">      <span class="kw">this</span>.<span class="at">requestQueue</span> <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-39" data-line-number="39">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-40" data-line-number="40"></a>
+<a class="sourceLine" id="cb44-41" data-line-number="41">    <span class="co">// 試着室に入ります。</span></a>
+<a class="sourceLine" id="cb44-42" data-line-number="42">    async <span class="at">enter</span>() <span class="op">{</span>  <span class="co">// asyncは不要なのですけど、呼び出し側にawaitしてもらいやすいように付けておきます。</span></a>
+<a class="sourceLine" id="cb44-43" data-line-number="43">      <span class="co">// 誰も使っていない場合は、</span></a>
+<a class="sourceLine" id="cb44-44" data-line-number="44">      <span class="cf">if</span> (<span class="op">!</span><span class="kw">this</span>.<span class="at">hasUsed</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-45" data-line-number="45">        <span class="co">// 使用中の札をかけて、</span></a>
+<a class="sourceLine" id="cb44-46" data-line-number="46">        <span class="kw">this</span>.<span class="at">hasUsed</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb44-47" data-line-number="47">        <span class="co">// すぐに入ります。</span></a>
+<a class="sourceLine" id="cb44-48" data-line-number="48">        <span class="cf">return</span> <span class="va">Promise</span>.<span class="at">resolve</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-49" data-line-number="49">      <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-50" data-line-number="50"></a>
+<a class="sourceLine" id="cb44-51" data-line-number="51">      <span class="co">// 試着室が空くのを待つPromiseを作成して、そのresolveを待ち行列に入れておきます。</span></a>
+<a class="sourceLine" id="cb44-52" data-line-number="52">      <span class="co">// このresolveは、leave()で呼び出されます。</span></a>
+<a class="sourceLine" id="cb44-53" data-line-number="53">      <span class="cf">return</span> <span class="kw">new</span> <span class="at">Promise</span>(resolve <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-54" data-line-number="54">        <span class="kw">this</span>.<span class="va">requestQueue</span>.<span class="at">push</span>(resolve)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-55" data-line-number="55">      <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-56" data-line-number="56">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-57" data-line-number="57"></a>
+<a class="sourceLine" id="cb44-58" data-line-number="58">    <span class="co">// 試着室を出ます。</span></a>
+<a class="sourceLine" id="cb44-59" data-line-number="59">    async <span class="at">leave</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-60" data-line-number="60">      <span class="co">// 誰も待っていないなら、</span></a>
+<a class="sourceLine" id="cb44-61" data-line-number="61">      <span class="cf">if</span> (<span class="kw">this</span>.<span class="va">requestQueue</span>.<span class="at">length</span> <span class="op">==</span> <span class="dv">0</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-62" data-line-number="62">        <span class="co">// 使用中の札をもとにもして、</span></a>
+<a class="sourceLine" id="cb44-63" data-line-number="63">        <span class="kw">this</span>.<span class="at">hasUsed</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb44-64" data-line-number="64">        <span class="co">// 終了します。</span></a>
+<a class="sourceLine" id="cb44-65" data-line-number="65">        <span class="cf">return</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb44-66" data-line-number="66">      <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-67" data-line-number="67"></a>
+<a class="sourceLine" id="cb44-68" data-line-number="68">      <span class="co">// 待ち行列の先頭のresolveを呼び出して、enter()の際に作成したPromiseを完了させます。</span></a>
+<a class="sourceLine" id="cb44-69" data-line-number="69">      <span class="kw">this</span>.<span class="va">requestQueue</span>.<span class="at">shift</span>()()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-70" data-line-number="70">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-71" data-line-number="71">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-72" data-line-number="72"></a>
+<a class="sourceLine" id="cb44-73" data-line-number="73">  <span class="co">// 試着室を1つ設置します。</span></a>
+<a class="sourceLine" id="cb44-74" data-line-number="74">  <span class="kw">const</span> fittingRoom <span class="op">=</span> <span class="kw">new</span> <span class="at">FittingRoom</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-75" data-line-number="75"></a>
+<a class="sourceLine" id="cb44-76" data-line-number="76">  <span class="co">// お客様。</span></a>
+<a class="sourceLine" id="cb44-77" data-line-number="77">  <span class="kw">class</span> Customer <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-78" data-line-number="78">    <span class="co">// コンストラクター。</span></a>
+<a class="sourceLine" id="cb44-79" data-line-number="79">    <span class="at">constructor</span>(name) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-80" data-line-number="80">      <span class="kw">this</span>.<span class="at">name</span> <span class="op">=</span> name<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-81" data-line-number="81">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-82" data-line-number="82"></a>
+<a class="sourceLine" id="cb44-83" data-line-number="83">    <span class="co">// 商品を選びます。平均12分で標準偏差3分の正規乱数分かかるものとします。</span></a>
+<a class="sourceLine" id="cb44-84" data-line-number="84">    async <span class="at">searchItem</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-85" data-line-number="85">      await <span class="at">delay</span>(<span class="at">normalRandom</span>(<span class="dv">12</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">24</span>) <span class="op">*</span> <span class="dv">1000</span>)<span class="op">;</span>  <span class="co">// シミュレーション内の時間は、1分＝1秒とします。</span></a>
+<a class="sourceLine" id="cb44-86" data-line-number="86">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-87" data-line-number="87"></a>
+<a class="sourceLine" id="cb44-88" data-line-number="88">    <span class="co">// 商品を試着します。平均3分で標準偏差1分の正規乱数分かかるものとします。</span></a>
+<a class="sourceLine" id="cb44-89" data-line-number="89">    async <span class="at">useFittingRoom</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-90" data-line-number="90">      await <span class="at">delay</span>(<span class="at">normalRandom</span>( <span class="dv">3</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span>  <span class="dv">6</span>) <span class="op">*</span> <span class="dv">1000</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-91" data-line-number="91">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-92" data-line-number="92"></a>
+<a class="sourceLine" id="cb44-93" data-line-number="93">    <span class="co">// 行動を開始します。</span></a>
+<a class="sourceLine" id="cb44-94" data-line-number="94">    async <span class="at">start</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-95" data-line-number="95">      <span class="cf">while</span> (<span class="kw">true</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-96" data-line-number="96">        <span class="co">// 商品を選んで、</span></a>
+<a class="sourceLine" id="cb44-97" data-line-number="97">        await <span class="kw">this</span>.<span class="at">searchItem</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-98" data-line-number="98"></a>
+<a class="sourceLine" id="cb44-99" data-line-number="99">        <span class="co">// フィッティング・ルームに入ろうとします。他の人が使っているなら、空くまで待ちます。</span></a>
+<a class="sourceLine" id="cb44-100" data-line-number="100">        <span class="at">report</span>(<span class="vs">`</span><span class="sc">${</span> <span class="kw">this</span>.<span class="at">name</span> <span class="sc">}</span><span class="vs"> is requesting the fitting room.`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-101" data-line-number="101">        await <span class="va">fittingRoom</span>.<span class="at">enter</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-102" data-line-number="102"></a>
+<a class="sourceLine" id="cb44-103" data-line-number="103">        <span class="co">// 試着室に入れたら試着をして、</span></a>
+<a class="sourceLine" id="cb44-104" data-line-number="104">        <span class="at">report</span>(<span class="vs">`</span><span class="sc">${</span> <span class="kw">this</span>.<span class="at">name</span> <span class="sc">}</span><span class="vs"> has entered the fitting room.`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-105" data-line-number="105">        await <span class="kw">this</span>.<span class="at">useFittingRoom</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-106" data-line-number="106"></a>
+<a class="sourceLine" id="cb44-107" data-line-number="107">        <span class="co">// 試着室を出ます。</span></a>
+<a class="sourceLine" id="cb44-108" data-line-number="108">        await <span class="va">fittingRoom</span>.<span class="at">leave</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-109" data-line-number="109">      <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-110" data-line-number="110">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-111" data-line-number="111">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb44-112" data-line-number="112"></a>
+<a class="sourceLine" id="cb44-113" data-line-number="113">  <span class="co">// お客様は3人とします。</span></a>
+<a class="sourceLine" id="cb44-114" data-line-number="114">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Sam'</span>).<span class="at">start</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-115" data-line-number="115">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Sally'</span>).<span class="at">start</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-116" data-line-number="116">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Andy'</span>).<span class="at">start</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-117" data-line-number="117"><span class="op">}</span></a></code></pre></div>
+<p>○○プログラミング最高！　○○プログラミング以外のやり方は○○プログラミングじゃないからダメ……という考え方は、やっぱりダメなのでしょうな。</p>
 <section class="footnotes">
 <hr />
 <ol>
@@ -1787,7 +1763,7 @@ sys     0m0.103s</code></pre>
 <li id="fn4"><p>まぁ、ECMAScriptだけでもほぼ同じ書き方ができるのですけど……。とはいえ、遅延評価があったりするので、Immutable.jsの集合操作が便利だというのは正しいはず。<a href="#fnref4" class="footnote-back">↩</a></p></li>
 <li id="fn5"><p>カリー化の実現方法は言語やライブラリによって様々で、このコードのようなテキトーな方式ではないのでご安心を。<a href="#fnref5" class="footnote-back">↩</a></p></li>
 <li id="fn6"><p>今考えると、<code>R.pipe(R.aperture(2), R.all(R.apply(R.equals)))</code>の部分はラムダ式でやった方が楽な気もしますけど……。<a href="#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>JavaScriptでは、オブジェクトに対しても汎用的な集合操作の関数を適用できるわけで、だから汎用データ構造を使う<em>積極的な</em>理由はあまりないけどね。<a href="#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn7"><p>一般的な言語の話です。JavaScriptではオブジェクトに対しても汎用的な集合操作の関数を適用できるわけで、だから汎用データ構造を使う<em>積極的な</em>理由はあまりないんですよね。<a href="#fnref7" class="footnote-back">↩</a></p></li>
 <li id="fn8"><p>Immutable.jsが妙に遅かったのは、すみません、今は理由が分かりません。たぶん、私のコードの書き方のせいだと思いますけど。<a href="#fnref8" class="footnote-back">↩</a></p></li>
 <li id="fn9"><p>実は試合が1回だけの場合でも<code>getNextScoreAndBoard()</code>や<code>getScore()</code>に対するメモ化は有効です。でも、それをやると試合数を増やした場合に<code>getNextBoardByComputer()</code>をメモ化したのと同じ結果が出ちゃって、関数型プログラミングは速いという間違った結論になってしまうんですよ……。コンピュータ手番の1回目で、メモ化のオーバーヘッドで体感速度がかえって遅くなってしまいますしね。<a href="#fnref9" class="footnote-back">↩</a></p></li>
 </ol>
