@@ -709,7 +709,7 @@ export default async function tictactoe() {
 }
 ~~~
 
-やりました！　完全にイミュータブルです。短くなったし、分かりやすくなったし。Immutable.jsすげぇ！[^4]
+やったぜ！　完全にイミュータブルです。短くなったし、分かりやすくなったし。Immutable.jsすげぇ！[^4]
 
 というわけで、これで完成かな？
 
