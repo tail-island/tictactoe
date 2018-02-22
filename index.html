@@ -646,7 +646,7 @@ border-color: #4078c0;
 <p>もし上の提案を魅力的だと思ったなら、お暇な時に本稿を読んでみてください。使用するプログラミング言語は多くの方に馴染みがあるだろうJavaScript（実行環境はNode.js。文法はECMAScript 2017）なので、ご安心を。Haskellのような関数型プログラミング言語を使用しなくても、今時の言語ならかなりのところまで関数型プログラミングできるんです。たぶん、あなたが次のプロジェクトで使おうとしている、そのプログラミング言語でも。</p>
 <h2>副作用は悪。被害を減らすために、昔から様々な工夫がなされてきました</h2>
 <p>大昔、私が初めてコンピューターに触ったころ、マイコン（マイクロ・コンピューター）からパソコン（パーソナル・コンピューター）に名前が変わり始めたころは、プログラミングはBASICという言語でやるものでした。このBASICって、今考えると信じられないのですけど、グローバル変数しかなかったんですよ。サブ・ルーチンで何か計算をしたら、その計算結果はグローバル変数に入れるしかなくて、だから、どのサブ・ルーチンがどの変数を変更するのかの対応表を頭の中においてプログラミングしていました。</p>
-<p>実は、近代プログラミング言語であるJavaScriptでも、<code>var</code>や<code>const</code>や<code>let</code>で修飾しなければ、グローバルな変数になるんです<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
+<p>実は、近代プログラミング言語であるJavaScriptでも、<code>var</code>や<code>const</code>や<code>let</code>で修飾しなければ、グローバルな変数になってしまうんです<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&lt;!</span>DOCTYPE html<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&lt;</span>html<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="op">&lt;</span>head<span class="op">&gt;</span></a>
