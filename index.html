@@ -1765,7 +1765,7 @@ sys     0m0.103s</code></pre>
 <li id="fn6"><p>今考えると、<code>R.pipe(R.aperture(2), R.all(R.apply(R.equals)))</code>の部分はラムダ式でやった方が楽な気がします……。<a href="#fnref6" class="footnote-back">↩</a></p></li>
 <li id="fn7"><p>一般的な言語の話です。JavaScriptではオブジェクトに対しても汎用的な集合操作の関数を適用できるわけで、だから汎用データ構造を使う<em>積極的な</em>理由はあまりないんですよね。<a href="#fnref7" class="footnote-back">↩</a></p></li>
 <li id="fn8"><p>Immutable.jsが妙に遅かったのは、すみません、今は理由が分かりません。たぶん、私のコードの書き方のせいだと思いますけど。<a href="#fnref8" class="footnote-back">↩</a></p></li>
-<li id="fn9"><p>実は試合が1回だけの場合でも<code>getNextScoreAndBoard()</code>や<code>getScore()</code>に対するメモ化は有効です。でも、それをやると試合数を増やした場合に<code>getNextBoardByComputer()</code>をメモ化したのと同じ結果が出ちゃって、関数型プログラミングは速いという間違った結論になってしまうんですよ……。コンピュータ手番の1回目で、メモ化のオーバーヘッドで体感速度がかえって遅くなってしまいますしね。<a href="#fnref9" class="footnote-back">↩</a></p></li>
+<li id="fn9"><p>実は試合が1回だけの場合でも<code>getNextScoreAndBoard()</code>や<code>getScore()</code>に対するメモ化は有効です。でも、それをやると試合数を増やした場合に<code>getNextBoardByComputer()</code>をメモ化したのと同じ結果が出ちゃって、関数型プログラミングは速いという間違った結論になってしまうんですよ……。コンピュータ手番の1回目では、メモ化のオーバーヘッドで体感速度がかえって遅くなってしまいますしね。<a href="#fnref9" class="footnote-back">↩</a></p></li>
 </ol>
 </section>
 </article>
