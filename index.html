@@ -666,7 +666,7 @@ border-color: #4078c0;
 <a class="sourceLine" id="cb1-17" data-line-number="17">    &lt;/script<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-18" data-line-number="18">  &lt;/body<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-19" data-line-number="19">&lt;/html<span class="op">&gt;</span></a></code></pre></div>
-<p>上のコードはグローバル変数をループのカウンターとして使用していて、そのグローバル変数のカウンターを<code>foo</code>の中で変更していますから、ループの実行回数は1回だけ、しかも「1000回fooしました」と表示されてしまいます。大昔は、こんなプログラミング言語ばっかりだったんですよ。</p>
+<p>上のコードはグローバル変数をループのカウンターとして使用していて、そのグローバル変数のカウンターを<code>foo</code>の中で変更していますから、ループの実行回数は1回だけで、しかも「1000回fooしました」と表示されてしまいます。大昔は、こんなプログラミング言語ばっかりだったんですよ。</p>
 <p>こんな状態じゃあとてもプログラムなんか書いてられないので、関数内でだけ使える変数ってのが生まれたわけです。JavaScriptの場合は、<code>var</code>を付けるとその変数のスコープ（有効範囲）は関数内のみになります（関数の外側で宣言されれば、グローバル変数ですけど）。しかし、<code>var</code>をつけていても、以下のような場合には混乱が発生しました。</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">function</span> <span class="at">foo</span>() <span class="op">{</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">var</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
