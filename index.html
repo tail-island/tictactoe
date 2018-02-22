@@ -1625,14 +1625,14 @@ user    2m57.125s
 sys     0m5.720s</code></pre>
 <p>関数型プログラミングの実行速度って、良くはないけど悪すぎるわけではない感じ<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。<code>for</code>文の71%くらいの速度でした（普通はもっと悪いです。今回は<code>for</code>文の場合でもイミュータブルを目指していますから、差が縮まりました）。</p>
 <h3>メモ化が有効な場合も多いしね</h3>
-<p>今回のコードではあまり有効ではなかった（アルファ・ベータ法による枝刈りが効きすぎた）のですけど、実は今回のコードには関数型プログラミングらしい高速化テクニックを入れているんです。<code>getWinner</code>や<code>getNextPlayer</code>、<code>getNextBoards</code>のところに書いてある<code>R.memoize()</code>がそれ。</p>
+<p>今回のコードではあまり有効ではなかった（アルファ・ベータ法による枝刈りが効きすぎたので目立たなかった）のですけど、実は今回のコードには関数型プログラミングらしい高速化テクニックを入れているんです。<code>getWinner</code>や<code>getNextPlayer</code>、<code>getNextBoards</code>のところに書いてある<code>R.memoize()</code>がそれ。</p>
 <p>考えてみましょう。副作用がなければ、同じ関数を同じ引数で呼び出した場合の戻り値は必ず同じになります。過去に計算した結果を覚えておけば、再度計算しなくても済むわけ。これがメモ化と呼ばれるテクニックで、<code>R.memoize()</code>は、このメモ化を実現してくれる（引数と結果の対応表をメモリ内に作成して、関数を実行する代わりにその表の値を自動で返してくれる関数を作成する）関数なんです。</p>
 <p>あとね、そもそもね、同じゲーム板での最適手は毎回同じなわけで、だったら先程のベンチマークみたいに複数回ゲームが実行されると分かっているなら、<code>getNextBoardByComputer()</code>を<code>R.memoize()</code>しちゃえばよい<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>。というわけで、<code>getNextBoardByComputer()</code>を<code>R.memoize()</code>した場合の試合数100の実行時間はこちら。</p>
 <pre class="shell"><code>$ time npm start
 real    0m1.042s
 user    0m1.301s
 sys     0m0.103s</code></pre>
-<p>おお、<code>for</code>文の「にせんぱーせんと」の実行速度になりました。これなら問題ないですよね？　もし問題があるなら、試合回数を増やすことでいくらでも数字を大きくできますけど……。</p>
+<p>おお、<code>for</code>文の「にせんぱーせんと」の実行速度になりました。これなら問題ないですよね？　もし問題があっても、試合回数を増やすことでいくらでも数字を大きくできますし。</p>
 <h2>関数型もいいけど、オブジェクト指向もね</h2>
 <p>もう1つおまけを。実は最初は、オブジェクト指向の得意分野であるシミュレーションをお題にしようと考えていたんですよ。で、オブジェクト指向言語の元祖であるSimulaのWikipediaのページに載っていた試着室シミュレーションを、JavaScriptを使ってオブジェクト指向で組んだんです。そしてそのコードを関数型に書き換えようとしたらもー全然うまくいかなかったので途中で投げ出して三目並べにしたというわけ。「オブジェクトが相互にメッセージ・パッシングすることで状態が変わっていく」みたいな場合、オブジェクト指向は無敵な気がします。</p>
 <p>でも、私が関数型プログラミングの能力を引き出せていないだけの気もするし……。どなたか、以下のコードを関数型プログラミングで書き直していただけないでしょうか？</p>
@@ -1753,7 +1753,7 @@ sys     0m0.103s</code></pre>
 <a class="sourceLine" id="cb44-115" data-line-number="115">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Sally'</span>).<span class="at">start</span>()<span class="op">;</span></a>
 <a class="sourceLine" id="cb44-116" data-line-number="116">  <span class="kw">new</span> <span class="at">Customer</span>(<span class="st">'Andy'</span>).<span class="at">start</span>()<span class="op">;</span></a>
 <a class="sourceLine" id="cb44-117" data-line-number="117"><span class="op">}</span></a></code></pre></div>
-<p>○○プログラミング最高！　○○プログラミング以外のやり方は○○プログラミングじゃないからダメ……という考え方は、やっぱりダメなのでしょうな。 p</p>
+<p>○○プログラミング最高！　○○プログラミング以外のやり方は○○プログラミングじゃないからダメ……という考え方は、やっぱりダメなのでしょうな。</p>
 <section class="footnotes">
 <hr />
 <ol>
