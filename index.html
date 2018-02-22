@@ -1304,7 +1304,7 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb26-4" data-line-number="4">  .<span class="at">filter</span>(cells <span class="op">=&gt;</span> <span class="va">cells</span>.<span class="at">rest</span>().<span class="at">every</span>(cell <span class="op">=&gt;</span> cell <span class="op">==</span> <span class="va">cells</span>.<span class="at">first</span>()) <span class="op">&amp;&amp;</span> <span class="va">cells</span>.<span class="at">first</span>() <span class="op">!=</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb26-5" data-line-number="5">  .<span class="at">map</span>(cells <span class="op">=&gt;</span> <span class="va">cells</span>.<span class="at">first</span>())</a>
 <a class="sourceLine" id="cb26-6" data-line-number="6">  .<span class="at">first</span>()<span class="op">;</span></a></code></pre></div>
-<p>の<code>cells =&gt; ... &amp;&amp; cells.first() != 0</code>の部分、「1つ目が0でない」の部分は、カリー化だけじゃ対応できませんよね？　処理が「集合の1つ目の値を取得する」と「値が0であることを確認する」の2段階に分かれているわけですから。こんな場合は、関数合成と呼ばれるテクニックを使用しましょう。関数合成というのは、「f(g(x))」を「f∘g」と書くアレです。コードにすると、こんな感じ。</p>
+<p>の<code>cells =&gt; ... &amp;&amp; cells.first() != 0</code>の部分、「1つ目が0でない」の部分は、カリー化だけじゃ対応できませんよね？　処理が「集合の1つ目の値を取得する」と「値が0であることを確認する」の2段階に分かれているわけですから。こんな場合は、関数合成と呼ばれるテクニックを使用しましょう。関数合成というのは、「f(g(x))」を「f∘g」と数学の書くアレです。コードにすると、こんな感じ。</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">function</span> <span class="at">compose</span>(f<span class="op">,</span> g) <span class="op">{</span></a>
 <a class="sourceLine" id="cb27-2" data-line-number="2">  <span class="cf">return</span> (x) <span class="op">=&gt;</span> <span class="at">f</span>(<span class="at">g</span>(x))<span class="op">;</span></a>
 <a class="sourceLine" id="cb27-3" data-line-number="3"><span class="op">}</span></a>
@@ -1329,7 +1329,7 @@ return f(winningLines);</code></pre>
 <a class="sourceLine" id="cb29-3" data-line-number="3">              <span class="va">f2</span>...))<span class="op">;</span></a></code></pre></div>
 <p>こんな長いコードを毎回書くのは面倒なので、以下のコードで関数化してしまいましょう。</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">const</span> cpa <span class="op">=</span> (x<span class="op">,</span> ...<span class="at">fs</span>) <span class="op">=&gt;</span> <span class="va">R</span>.<span class="at">call</span>(<span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">always</span>(x)<span class="op">,</span> ...<span class="at">fs</span>))<span class="op">;</span></a></code></pre></div>
-<p>これを前提にして勝者を判定するメソッド全体を書いてみると、以下のようになります。</p>
+<p>これを前提にして勝者を判定するメソッド全体を書いてみると、以下のようになりました。</p>
 <pre class="javascripot"><code>get winner() {
   const winningLines = [[0, 3, 6], [1, 4, 7], [2, 5, 8],  // 縦
                         [0, 1, 2], [3, 4, 5], [6, 7, 8],  // 横
@@ -1344,9 +1344,9 @@ return f(winningLines);</code></pre>
                       R.always(R.any(R.equals(0), board) ? -1 : 0)));
 }</code></pre>
 <p>最初は文字がいっぱいで分かりづらく感じるかもしれませんけど、コードを書いていれば何回も何回も<code>map</code>だとか<code>equals</code>だとか<code>complement</code>とかに出会うことになるので、すぐに慣れてパターンとして認識できるようになります。そうなると、もープログラミングがちょー楽ちんなのですよ、本当に。</p>
-<p><code>R.pipe(R.aperture(2), R.all(R.apply(R.equals)))</code>のような、今後も使いそうな部分に名前をつけるという工夫をしてもよいですしね。</p>
+<p>そうそう、<code>R.pipe(R.aperture(2), R.all(R.apply(R.equals)))</code>のような、今後も使いそうな部分に名前をつけるという工夫をしてもよいですしね。</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">const</span> allSame <span class="op">=</span> <span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">aperture</span>(<span class="dv">2</span>)<span class="op">,</span> <span class="va">R</span>.<span class="at">all</span>(<span class="va">R</span>.<span class="at">apply</span>(<span class="va">R</span>.<span class="at">equals</span>)))<span class="op">;</span></a></code></pre></div>
-<p>もう少し。たとえば<code>R.filter(R.equals(0))</code>というコードは、「値が0の要素だけ抽出する」わけで、これだけで何をするのかだけが明確に分かります。外から見た仕様である外部仕様を、簡潔に明確に十分に記述しているわけですね（内部仕様である「どのようにやるか」は、コードの中ですら書く必要がないんですな、今は）。でも、上のコードの<code>const winningLines = ...</code>の部分は、あまり良い仕様の記述には思えません。これが何なのかが分からなくて、コメントで補足しているのですから。</p>
+<p>もう少し。たとえば<code>R.filter(R.equals(0))</code>というコードは、「値が0の要素だけ抽出する」わけで、これだけで何をするのかだけが明確に分かります。外から見た仕様である外部仕様を、簡潔に明確に十分に記述しているわけです（内部仕様の「どのようにやるか」は、コードの中ですら書く必要がないんですな、今は）。でも、上のコードの<code>const winningLines = ...</code>の部分は、あまり良い仕様の記述には思えません。これが何なのかが分からなくて、コメントで補足しているのですから。</p>
 <p>だから、この部分も仕様化しちゃいましょう。縦というのが何なのかといえば、上下に伸びるモノですよね？　今回は3×3のボードを1次元配列で表現しているので、以下のような感じでしょうか？</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co">// -3すると上、+3すると下になります。</span></a>
 <a class="sourceLine" id="cb33-2" data-line-number="2"><span class="kw">const</span> getVertical <span class="op">=</span> center <span class="op">=&gt;</span> [center <span class="op">-</span> <span class="dv">3</span><span class="op">,</span> center<span class="op">,</span> center <span class="op">+</span> <span class="dv">3</span>]<span class="op">;</span></a></code></pre></div>
@@ -1416,7 +1416,7 @@ return f(winningLines);</code></pre>
 <a class="sourceLine" id="cb38-36" data-line-number="36"><span class="va">console</span>.<span class="at">log</span>(m[<span class="dv">0</span>].<span class="at">computers</span>[<span class="dv">0</span>].<span class="at">name</span>)<span class="op">;</span>        <span class="co">// 「MacBook Pro」が表示されます。</span></a></code></pre></div>
 <p>で、前章で考えたように、組み合わせることを考えれば、オブジェクトのメソッドよりも関数を使用したほうが得。で、メソッドがないのだとしたらオブジェクトと連想記憶にはあまり差がなくて、だったらわざわざクラスを定義しなくてもいいんじゃね？　オブジェクトの属性がカプセル化されずに公開されることになりますけど、副作用が無いのだから問題は無いしね。なにより、汎用的な集合操作の関数群で処理を記述できる利便性は捨てがたい<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>。</p>
 <p>というわけで、関数型プログラマーは、言語が提供する型、リストやマップで多くの事柄を表現しちゃいます（Haskellの人には型を追加して数学的な特性を定義してカッチリやるのが好きな人もいるかもしれませんけど、私はHaskellerじゃなくてClojurianなので……）。だからたとえば、<code>x</code>と<code>y</code>を持つ<code>Point</code>クラスを作成する代わりに、要素数が2つのリストで座標を表現しちゃいます。<code>Point</code>のメソッドとして幾何計算の機能を追加していくのではなくて、汎用的な行列演算の関数群を作成して幾何計算をやるのです。</p>
-<p>本稿でも、クラスを定義しないで、あと、先程から紹介してきたRamdaを利用して三目並べを組み直してみましょう。というわけで、以下が最終的なコードです。</p>
+<p>本稿でも、クラスを定義しないで、あと、先程から紹介してきたRamdaを利用して、三目並べを書き直してみました。以下が、その最終的なコード。</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="im">import</span> process  <span class="im">from</span> <span class="st">'process'</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb39-2" data-line-number="2"><span class="im">import</span> R        <span class="im">from</span> <span class="st">'ramda'</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb39-3" data-line-number="3"><span class="im">import</span> readline <span class="im">from</span> <span class="st">'readline'</span><span class="op">;</span></a>
@@ -1598,7 +1598,7 @@ return f(winningLines);</code></pre>
 <a class="sourceLine" id="cb39-179" data-line-number="179">    <span class="at">f</span>(await <span class="va">getNextBoardFunctionIterator</span>.<span class="at">next</span>().<span class="at">value</span>(board))<span class="op">;</span></a>
 <a class="sourceLine" id="cb39-180" data-line-number="180">  <span class="op">}</span>)(<span class="va">R</span>.<span class="at">repeat</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">9</span>))<span class="op">;</span></a>
 <a class="sourceLine" id="cb39-181" data-line-number="181"><span class="op">}</span></a></code></pre></div>
-<p>RamdaがECMAScriptのイテレーターを扱えなかったので最後の<code>tictactoe()</code>がかなり不細工（イテレーターは<code>next()</code>で内部状態が変わるのでイミュータブルじゃないし）ですけど、それ以外の部分は、重複のない、（関数型プログラミングの関数名に慣れていれば）読みやすいコードになったのではないでしょうか？</p>
+<p>Ramdaが無限リストやECMAScriptのイテレーターを扱えなかったので最後の<code>tictactoe()</code>がかなり不細工（イテレーターは<code>next()</code>で内部状態が変わるのでイミュータブルじゃないし）ですけど、それ以外の部分は、重複のない、（関数型プログラミングの関数名に慣れていれば）読みやすいコードになったのではないでしょうか？</p>
 <h2>パフォーマンス？　良くはないです。でも、それほど悪くは無いです</h2>
 <p>おまけとして、敢えて触れずに来たパフォーマンスの話題を。関数型プログラミングで作成したプログラムの実行速度は、ぶっちゃけ遅いです。オブジェクトを変更するとコピーが作られてしまうんですからね（最初から関数型として作成されたプログラミング言語なら、うまいこと差分管理されてコピーは作られなかったりするのですけど）。</p>
 <p>ともあれ、試してみましょう。コンピューター対コンピューターで100試合繰り返すのにかかった時間を、私のMacBook Pro（2017 TouchBar<em>非</em>搭載モデル）で調べてみました。</p>
@@ -1623,7 +1623,7 @@ sys     0m0.710s</code></pre>
 real    1m55.251s
 user    2m57.125s
 sys     0m5.720s</code></pre>
-<p>関数型プログラミングの実行速度って、良くはないけど悪すぎるわけではない感じ<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。<code>for</code>文の71%くらいの速度でした。</p>
+<p>関数型プログラミングの実行速度って、良くはないけど悪すぎるわけではない感じ<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。<code>for</code>文の71%くらいの速度でした（普通はもっと悪いです。今回は<code>for</code>文の場合でもイミュータブルを目指していますから、差が縮まりました）。</p>
 <h3>メモ化が有効な場合も多いしね</h3>
 <p>今回のコードではあまり有効ではなかった（アルファ・ベータ法による枝刈りが効きすぎた）のですけど、実は今回のコードには関数型プログラミングらしい高速化テクニックを入れているんです。<code>getWinner</code>や<code>getNextPlayer</code>、<code>getNextBoards</code>のところに書いてある<code>R.memoize()</code>がそれ。</p>
 <p>考えてみましょう。副作用がなければ、同じ関数を同じ引数で呼び出した場合の戻り値は必ず同じになります。過去に計算した結果を覚えておけば、再度計算しなくても済むわけ。これがメモ化と呼ばれるテクニックで、<code>R.memoize()</code>は、このメモ化を実現してくれる（引数と結果の対応表をメモリ内に作成して、関数を実行する代わりにその表の値を自動で返してくれる関数を作成する）関数なんです。</p>
