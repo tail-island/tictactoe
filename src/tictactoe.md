@@ -1,6 +1,6 @@
 # 関数型プログラミングのすゝめ
 
-突然ですが、質問です。関数の引数が参照渡しになるプログラミング言語と値渡しになるプログラミング言語、あなたはどちらが好きですか？
+突然ですけど、質問です。関数の引数が参照渡しになるプログラミング言語と値渡しになるプログラミング言語、あなたはどちらが好きですか？
 
 プリミティブ型だと値渡しでオブジェクト型だと参照渡しになるというような意味での質問ではなくて、古き良きFORTRANのような参照渡ししか存在しないプログラミング言語と値渡しがサポートされている今時のプログラミング言語の、どちらが好きかという質問です。
 
@@ -26,7 +26,7 @@
 
 実は、近代プログラミング言語であるJavaScriptでも、`var`や`const`や`let`で修飾しなければ、グローバルな変数になってしまうんです[^1]。
 
-~~~ javascript
+~~~ html
 <!DOCTYPE html>
 <html>
   <head>
@@ -483,7 +483,7 @@ function getDeveloperNames(developers) {
 
 この場合も同じやり方でライブラリ化できます。
 
-~~~ javascriopt
+~~~ javascript
 function map(xs, f) {
   const result = [];
 
@@ -738,7 +738,7 @@ function equals(a, b) {
 
 で、この関数を使うと、
 
-~~~ javascripot
+~~~ javascript
 get nextPlayer() {
   return this.board.filter(cell => equals(0, cell)).size % 2 == 1 ? 1 : 2;
 }
@@ -826,7 +826,7 @@ console.log(compose(R.multiply(2), R.add(2))(1));  // 6が表示されます。(
 
 というわけで、Ramdaを使用して`GameState.winner()`を書き直してみましょう。
 
-~~~ javascripot
+~~~ javascript
 // 関数合成！
 const f = R.pipe(R.map(R.map(R.nth(R.__, gameState.board))),  // R.__は、この部分をとばして引数を設定するようにとの指示。
                  R.filter(R.both(R.pipe(R.aperture(2), R.all(R.apply(R.equals))),  // 隣り同士が全部同じ場合、
@@ -857,7 +857,7 @@ const cpa = (x, ...fs) => R.call(R.pipe(R.always(x), ...fs));
 
 これを前提にして勝者を判定するメソッド全体を書いてみると、以下のようになりました。
 
-~~~ javascripot
+~~~ javascript
 get winner() {
   const winningLines = [[0, 3, 6], [1, 4, 7], [2, 5, 8],  // 縦
                         [0, 1, 2], [3, 4, 5], [6, 7, 8],  // 横
@@ -898,7 +898,7 @@ const getHorizontal = center => [center - 1, center, center + 1];
 
 `getVertical()`と`getHorizontal()`を組み合わせれば、「横のライン3つ」も表現できます。
 
-~~~ javascripot
+~~~ javascript
 const getHorizontals = R.pipe(getVertical, R.map(getHorizontal));  // 縦に伸ばしたそれぞれを中心にして、横に伸ばしたもの。
 ~~~
 

@@ -634,7 +634,7 @@ border-color: #4078c0;
 <body>
 <article class="markdown-body">
 <h1>関数型プログラミングのすゝめ</h1>
-<p>突然ですが、質問です。関数の引数が参照渡しになるプログラミング言語と値渡しになるプログラミング言語、あなたはどちらが好きですか？</p>
+<p>突然ですけど、質問です。関数の引数が参照渡しになるプログラミング言語と値渡しになるプログラミング言語、あなたはどちらが好きですか？</p>
 <p>プリミティブ型だと値渡しでオブジェクト型だと参照渡しになるというような意味での質問ではなくて、古き良きFORTRANのような参照渡ししか存在しないプログラミング言語と値渡しがサポートされている今時のプログラミング言語の、どちらが好きかという質問です。</p>
 <p>当然、値渡しをサポートするプログラミング言語の方が好きですよね？　<code>foo(x)</code>と書く場合に、<code>x</code>の内容が関数の呼び出し前と後で変わるかもしれないと考えながらプログラミングするのは大変ですもん。副作用が少ない方が、楽にプログラミングできるというわけ。</p>
 <p>この副作用を考えなくても良いプログラミングの方式があったら、嬉しいと思いませんか？　関数型プログラミングは、この面倒な副作用を究極まで抑えてくれるんです。</p>
@@ -647,13 +647,13 @@ border-color: #4078c0;
 <h2>副作用は悪。被害を減らすために、昔から様々な工夫がなされてきました</h2>
 <p>大昔、私が初めてコンピューターに触ったころ、マイコン（マイクロ・コンピューター）からパソコン（パーソナル・コンピューター）に名前が変わり始めたころは、プログラミングはBASICという言語でやるものでした。このBASICって、今考えると信じられないのですけど、グローバル変数しかなかったんですよ。サブ・ルーチンで何か計算をしたら、その計算結果はグローバル変数に入れるしかなくて、だから、どのサブ・ルーチンがどの変数を変更するのかの対応表を頭の中においてプログラミングしていました。</p>
 <p>実は、近代プログラミング言語であるJavaScriptでも、<code>var</code>や<code>const</code>や<code>let</code>で修飾しなければ、グローバルな変数になってしまうんです<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&lt;!</span>DOCTYPE html<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&lt;</span>html<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="op">&lt;</span>head<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="op">&lt;</span>title<span class="op">&gt;</span>Pythonを書いた後だとやりがちなミス&lt;/title<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  &lt;/head<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="op">&lt;</span>body<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="op">&lt;</span>script<span class="op">&gt;</span></a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;html&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;head&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">&lt;title&gt;</span>Pythonを書いた後だとやりがちなミス<span class="kw">&lt;/title&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="kw">&lt;/head&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="kw">&lt;body&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="kw">&lt;script&gt;</span></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">      <span class="kw">function</span> <span class="at">foo</span>() <span class="op">{</span></a>
 <a class="sourceLine" id="cb1-9" data-line-number="9">        i <span class="op">=</span> <span class="dv">999</span><span class="op">;</span>  <span class="co">// iはグローバル変数。</span></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">      <span class="op">}</span></a>
@@ -663,9 +663,9 @@ border-color: #4078c0;
 <a class="sourceLine" id="cb1-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb1-15" data-line-number="15">         <span class="va">document</span>.<span class="at">write</span>(<span class="st">''</span> <span class="op">+</span> (i <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="st">'回fooしました&lt;br&gt;'</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-16" data-line-number="16">      <span class="op">}</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">    &lt;/script<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  &lt;/body<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">&lt;/html<span class="op">&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-17" data-line-number="17">    <span class="kw">&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="kw">&lt;/body&gt;</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
 <p>上のコードはグローバル変数をループのカウンターとして使用していて、そのグローバル変数のカウンターを<code>foo</code>の中で変更していますから、ループの実行回数は1回だけで、しかも「1000回fooしました」と表示されてしまいます。大昔は、こんなプログラミング言語ばっかりだったんですよ。</p>
 <p>こんな状態じゃあとてもプログラムなんか書いてられないので、関数内でだけ使える変数ってのが生まれたわけです。JavaScriptの場合は、<code>var</code>を付けるとその変数のスコープ（有効範囲）は関数内のみになります（関数の外側で宣言されれば、グローバル変数ですけど）。しかし、<code>var</code>をつけていても、以下のような場合には混乱が発生しました。</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">function</span> <span class="at">foo</span>() <span class="op">{</span></a>
@@ -1037,19 +1037,19 @@ border-color: #4078c0;
 <a class="sourceLine" id="cb13-8" data-line-number="8">  <span class="cf">return</span> result<span class="op">;</span></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="op">}</span></a></code></pre></div>
 <p>この場合も同じやり方でライブラリ化できます。</p>
-<pre class="javascriopt"><code>function map(xs, f) {
-  const result = [];
-
-  for (const x of xs) {
-    result.push(f(x));  // 引数で受け取った関数を使用して、別の値（属性の値とか）に変換します。
-  }
-
-  return result;
-}
-
-console.log(map(filter(developers,
-                       developer =&gt; developer.language == 'ECMAScript'),
-                developer =&gt; developer.name));</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">function</span> <span class="at">map</span>(xs<span class="op">,</span> f) <span class="op">{</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="kw">const</span> result <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">  <span class="cf">for</span> (<span class="kw">const</span> x of xs) <span class="op">{</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">    <span class="va">result</span>.<span class="at">push</span>(<span class="at">f</span>(x))<span class="op">;</span>  <span class="co">// 引数で受け取った関数を使用して、別の値（属性の値とか）に変換します。</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">  <span class="cf">return</span> result<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="op">}</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="va">console</span>.<span class="at">log</span>(<span class="at">map</span>(<span class="at">filter</span>(developers<span class="op">,</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">                       developer <span class="op">=&gt;</span> <span class="va">developer</span>.<span class="at">language</span> <span class="op">==</span> <span class="st">'ECMAScript'</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">                developer <span class="op">=&gt;</span> <span class="va">developer</span>.<span class="at">name</span>))<span class="op">;</span></a></code></pre></div>
 <p>あとはアレだ、合計を出すような場合ですよ。</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">function</span> <span class="at">getTotalSalary</span>(developers) <span class="op">{</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">  <span class="kw">let</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
@@ -1255,9 +1255,9 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb20-2" data-line-number="2">  <span class="cf">return</span> a <span class="op">==</span> b<span class="op">;</span></a>
 <a class="sourceLine" id="cb20-3" data-line-number="3"><span class="op">}</span></a></code></pre></div>
 <p>で、この関数を使うと、</p>
-<pre class="javascripot"><code>get nextPlayer() {
-  return this.board.filter(cell =&gt; equals(0, cell)).size % 2 == 1 ? 1 : 2;
-}</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" data-line-number="1">get <span class="at">nextPlayer</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">  <span class="cf">return</span> <span class="kw">this</span>.<span class="va">board</span>.<span class="at">filter</span>(cell <span class="op">=&gt;</span> <span class="at">equals</span>(<span class="dv">0</span><span class="op">,</span> cell)).<span class="at">size</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">?</span> <span class="dv">1</span> : <span class="dv">2</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="op">}</span></a></code></pre></div>
 <p>あれ？　ちっとも楽になりません。引数が2つだからダメなわけで、1つにしてみたら？</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">function</span> <span class="at">equalsTo</span>(a) <span class="op">{</span></a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">  <span class="cf">return</span> (b) <span class="op">=&gt;</span> <span class="at">equals</span>(a<span class="op">,</span> b)<span class="op">;</span></a>
@@ -1311,16 +1311,16 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb27-5" data-line-number="5"><span class="va">console</span>.<span class="at">log</span>(<span class="at">compose</span>(<span class="va">R</span>.<span class="at">multiply</span>(<span class="dv">2</span>)<span class="op">,</span> <span class="va">R</span>.<span class="at">add</span>(<span class="dv">2</span>))(<span class="dv">1</span>))<span class="op">;</span>  <span class="co">// 6が表示されます。(1 + 2) * 2 = 6なので。後述するpipeなら、1 * 2 + 2で4が表示されます。</span></a></code></pre></div>
 <p><code>compose()</code>を使えば、<code>cells.first() != 0</code>の部分は<code>compose(R.complement(R.equals(0)), R.head)</code>と書けます（Ramdaでは<code>first</code>ではなくて<code>head</code>。<code>complement()</code>は、真偽を逆転させた関数を返します。<code>complement()</code>すると<code>x == 0</code>が<code>!(x == 0)</code>になります）。あと、Ramdaには、<code>pipe()</code>という書いた順と実行順序が同じになる素敵バージョンの関数合成もあります。</p>
 <p>というわけで、Ramdaを使用して<code>GameState.winner()</code>を書き直してみましょう。</p>
-<pre class="javascripot"><code>// 関数合成！
-const f = R.pipe(R.map(R.map(R.nth(R.__, gameState.board))),  // R.__は、この部分をとばして引数を設定するようにとの指示。
-                 R.filter(R.both(R.pipe(R.aperture(2), R.all(R.apply(R.equals))),  // 隣り同士が全部同じ場合、
-                                 R.pipe(R.head, R.complement(R.equals(0))))),      // かつ、最初の要素の値が0じゃない場合、
-                 R.ifElse(R.complement(R.isEmpty),  // 結果が空でなければ
-                          R.pipe(R.head, R.head),   // 最初の要素の最初の要素が勝者。
-                          R.always(R.any(R.equals(0), board) ? -1 : 0)));  // 0があるならまだ試合終了じゃない。なければ引き分け。
-
-// 呼び出し。
-return f(winningLines);</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co">// 関数合成！</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">const</span> f <span class="op">=</span> <span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">map</span>(<span class="va">R</span>.<span class="at">map</span>(<span class="va">R</span>.<span class="at">nth</span>(<span class="va">R</span>.<span class="at">__</span><span class="op">,</span> <span class="va">gameState</span>.<span class="at">board</span>)))<span class="op">,</span>  <span class="co">// R.__は、この部分をとばして引数を設定するようにとの指示。</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">                 <span class="va">R</span>.<span class="at">filter</span>(<span class="va">R</span>.<span class="at">both</span>(<span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">aperture</span>(<span class="dv">2</span>)<span class="op">,</span> <span class="va">R</span>.<span class="at">all</span>(<span class="va">R</span>.<span class="at">apply</span>(<span class="va">R</span>.<span class="at">equals</span>)))<span class="op">,</span>  <span class="co">// 隣り同士が全部同じ場合、</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">                                 <span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">head</span><span class="op">,</span> <span class="va">R</span>.<span class="at">complement</span>(<span class="va">R</span>.<span class="at">equals</span>(<span class="dv">0</span>)))))<span class="op">,</span>      <span class="co">// かつ、最初の要素の値が0じゃない場合、</span></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">                 <span class="va">R</span>.<span class="at">ifElse</span>(<span class="va">R</span>.<span class="at">complement</span>(<span class="va">R</span>.<span class="at">isEmpty</span>)<span class="op">,</span>  <span class="co">// 結果が空でなければ</span></a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">                          <span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">head</span><span class="op">,</span> <span class="va">R</span>.<span class="at">head</span>)<span class="op">,</span>   <span class="co">// 最初の要素の最初の要素が勝者。</span></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">                          <span class="va">R</span>.<span class="at">always</span>(<span class="va">R</span>.<span class="at">any</span>(<span class="va">R</span>.<span class="at">equals</span>(<span class="dv">0</span>)<span class="op">,</span> board) <span class="op">?</span> <span class="dv">-1</span> : <span class="dv">0</span>)))<span class="op">;</span>  <span class="co">// 0があるならまだ試合終了じゃない。なければ引き分け。</span></a>
+<a class="sourceLine" id="cb28-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">// 呼び出し。</span></a>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="cf">return</span> <span class="at">f</span>(winningLines)<span class="op">;</span></a></code></pre></div>
 <p>あれ？　<code>winningLines...first()</code>の部分だけじゃなくて、その後の<code>if</code>文や三項演算子の部分まで書いちゃった……。関数合成でプログラムを組むのがあまりに楽ちん<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>だったもんで、勢い余っちゃいましたよ。</p>
 <p>でも、関数合成と呼び出しと引数の設定を一度にできたら、もっと楽になるような気がします（ECMAScriptで提案されているパイプライン演算子（<code>|&gt;</code>）みたいな感じ）。Ramdaを使う場合は、以下の書き方で似た機能を実現できます（<code>R.always</code>は、どんな引数で呼ばれても指定した値を返す関数を返す関数です）。</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="va">R</span>.<span class="at">call</span>(<span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">always</span>(引数)<span class="op">,</span></a>
@@ -1329,19 +1329,19 @@ return f(winningLines);</code></pre>
 <p>こんな長いコードを毎回書くのは面倒なので、以下のコードで関数化してしまいましょう。</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">const</span> cpa <span class="op">=</span> (x<span class="op">,</span> ...<span class="at">fs</span>) <span class="op">=&gt;</span> <span class="va">R</span>.<span class="at">call</span>(<span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">always</span>(x)<span class="op">,</span> ...<span class="at">fs</span>))<span class="op">;</span></a></code></pre></div>
 <p>これを前提にして勝者を判定するメソッド全体を書いてみると、以下のようになりました。</p>
-<pre class="javascripot"><code>get winner() {
-  const winningLines = [[0, 3, 6], [1, 4, 7], [2, 5, 8],  // 縦
-                        [0, 1, 2], [3, 4, 5], [6, 7, 8],  // 横
-                        [0, 4, 8], [2, 4, 6]];            // 斜め
-
-  return cpa(winningLines,
-             R.map(R.map(R.nth(R.__, this.board))),
-             R.filter(R.both(R.pipe(R.aperture(2), R.all(R.apply(R.equals))),
-                             R.pipe(R.head, R.complement(R.equals(0))))),
-             R.ifElse(R.complement(R.isEmpty),
-                      R.pipe(R.head, R.head),
-                      R.always(R.any(R.equals(0), board) ? -1 : 0)));
-}</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb31-1" data-line-number="1">get <span class="at">winner</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">  <span class="kw">const</span> winningLines <span class="op">=</span> [[<span class="dv">0</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">6</span>]<span class="op">,</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">7</span>]<span class="op">,</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span>  <span class="co">// 縦</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3">                        [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> [<span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">,</span> [<span class="dv">6</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span>  <span class="co">// 横</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4">                        [<span class="dv">0</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">6</span>]]<span class="op">;</span>            <span class="co">// 斜め</span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6">  <span class="cf">return</span> <span class="at">cpa</span>(winningLines<span class="op">,</span></a>
+<a class="sourceLine" id="cb31-7" data-line-number="7">             <span class="va">R</span>.<span class="at">map</span>(<span class="va">R</span>.<span class="at">map</span>(<span class="va">R</span>.<span class="at">nth</span>(<span class="va">R</span>.<span class="at">__</span><span class="op">,</span> <span class="kw">this</span>.<span class="at">board</span>)))<span class="op">,</span></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8">             <span class="va">R</span>.<span class="at">filter</span>(<span class="va">R</span>.<span class="at">both</span>(<span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">aperture</span>(<span class="dv">2</span>)<span class="op">,</span> <span class="va">R</span>.<span class="at">all</span>(<span class="va">R</span>.<span class="at">apply</span>(<span class="va">R</span>.<span class="at">equals</span>)))<span class="op">,</span></a>
+<a class="sourceLine" id="cb31-9" data-line-number="9">                             <span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">head</span><span class="op">,</span> <span class="va">R</span>.<span class="at">complement</span>(<span class="va">R</span>.<span class="at">equals</span>(<span class="dv">0</span>)))))<span class="op">,</span></a>
+<a class="sourceLine" id="cb31-10" data-line-number="10">             <span class="va">R</span>.<span class="at">ifElse</span>(<span class="va">R</span>.<span class="at">complement</span>(<span class="va">R</span>.<span class="at">isEmpty</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb31-11" data-line-number="11">                      <span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">head</span><span class="op">,</span> <span class="va">R</span>.<span class="at">head</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb31-12" data-line-number="12">                      <span class="va">R</span>.<span class="at">always</span>(<span class="va">R</span>.<span class="at">any</span>(<span class="va">R</span>.<span class="at">equals</span>(<span class="dv">0</span>)<span class="op">,</span> board) <span class="op">?</span> <span class="dv">-1</span> : <span class="dv">0</span>)))<span class="op">;</span></a>
+<a class="sourceLine" id="cb31-13" data-line-number="13"><span class="op">}</span></a></code></pre></div>
 <p>最初は文字がいっぱいで分かりづらく感じるかもしれませんけど、コードを書いていれば何回も何回も<code>map</code>だとか<code>equals</code>だとか<code>complement</code>とかに出会うことになるので、すぐに慣れてパターンとして認識できるようになります。そうなると、もープログラミングがちょー楽ちんなのですよ、本当に。</p>
 <p>そうそう、<code>R.pipe(R.aperture(2), R.all(R.apply(R.equals)))</code>のような、今後も使いそうな部分に名前をつけるという工夫をしてもよいですしね。</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">const</span> allSame <span class="op">=</span> <span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">aperture</span>(<span class="dv">2</span>)<span class="op">,</span> <span class="va">R</span>.<span class="at">all</span>(<span class="va">R</span>.<span class="at">apply</span>(<span class="va">R</span>.<span class="at">equals</span>)))<span class="op">;</span></a></code></pre></div>
@@ -1352,7 +1352,7 @@ return f(winningLines);</code></pre>
 <p>横はこんな感じ。</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">const</span> getHorizontal <span class="op">=</span> center <span class="op">=&gt;</span> [center <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> center<span class="op">,</span> center <span class="op">+</span> <span class="dv">1</span>]<span class="op">;</span></a></code></pre></div>
 <p><code>getVertical()</code>と<code>getHorizontal()</code>を組み合わせれば、「横のライン3つ」も表現できます。</p>
-<pre class="javascripot"><code>const getHorizontals = R.pipe(getVertical, R.map(getHorizontal));  // 縦に伸ばしたそれぞれを中心にして、横に伸ばしたもの。</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">const</span> getHorizontals <span class="op">=</span> <span class="va">R</span>.<span class="at">pipe</span>(getVertical<span class="op">,</span> <span class="va">R</span>.<span class="at">map</span>(getHorizontal))<span class="op">;</span>  <span class="co">// 縦に伸ばしたそれぞれを中心にして、横に伸ばしたもの。</span></a></code></pre></div>
 <p>斜めは複数あるので、こんな感じ。</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co">// ベクトルの足し算がなかったので、定義しました。</span></a>
 <a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw">const</span> addVector <span class="op">=</span> <span class="va">R</span>.<span class="at">curry</span>(<span class="va">R</span>.<span class="at">pipe</span>(<span class="va">R</span>.<span class="at">zip</span><span class="op">,</span> <span class="va">R</span>.<span class="at">map</span>(<span class="va">R</span>.<span class="at">apply</span>(<span class="va">R</span>.<span class="at">add</span>))))<span class="op">;</span></a>
