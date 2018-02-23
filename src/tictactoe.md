@@ -777,8 +777,8 @@ get nextPlayer() {
 
 ~~~ javascript
 function equals(a, b) {
-  if (typeof b == 'undefined') {      // bが指定されなかった場合は、
-    return (b) => curryEquals(a, b);  // 関数を返します。
+  if (b == undefined) {          // bが指定されなかった場合は、
+    return (b) => equals(a, b);  // 関数を返します。
   }
 
   return a == b;  // そうでなければ、普通に処理します。
