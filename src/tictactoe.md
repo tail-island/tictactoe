@@ -630,7 +630,6 @@ class GameState extends I.Record({board: I.List.of(0, 0, 0, 0, 0, 0, 0, 0, 0)}) 
 class ComputerPlayer extends I.Record({gameState: null}) {
   getNextScoreAndGameState(gameState, alpha, beta) {
     // Immutable.jsのreduceを途中で止める方法が分からなくて枝刈りできなかったので、ごめんなさい、for文のままです。
-    // reducerの引数iterはES6のIteratorで、iter.done=trueにすれば止まるんだと思っていたら、Immutable.jsのSeqだった……。
 
     let nextScoreAndGameState = I.List.of(alpha, null);
 

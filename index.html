@@ -1164,83 +1164,82 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb18-52" data-line-number="52"><span class="kw">class</span> ComputerPlayer <span class="kw">extends</span> <span class="va">I</span>.<span class="at">Record</span>(<span class="op">{</span><span class="dt">gameState</span><span class="op">:</span> <span class="kw">null</span><span class="op">}</span>) <span class="op">{</span></a>
 <a class="sourceLine" id="cb18-53" data-line-number="53">  <span class="at">getNextScoreAndGameState</span>(gameState<span class="op">,</span> alpha<span class="op">,</span> beta) <span class="op">{</span></a>
 <a class="sourceLine" id="cb18-54" data-line-number="54">    <span class="co">// Immutable.jsのreduceを途中で止める方法が分からなくて枝刈りできなかったので、ごめんなさい、for文のままです。</span></a>
-<a class="sourceLine" id="cb18-55" data-line-number="55">    <span class="co">// reducerの引数iterはES6のIteratorで、iter.done=trueにすれば止まるんだと思っていたら、Immutable.jsのSeqだった……。</span></a>
-<a class="sourceLine" id="cb18-56" data-line-number="56"></a>
-<a class="sourceLine" id="cb18-57" data-line-number="57">    <span class="kw">let</span> nextScoreAndGameState <span class="op">=</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(alpha<span class="op">,</span> <span class="kw">null</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-58" data-line-number="58"></a>
-<a class="sourceLine" id="cb18-59" data-line-number="59">    <span class="cf">for</span> (<span class="kw">const</span> nextGameState of <span class="va">gameState</span>.<span class="at">nextGameStates</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-60" data-line-number="60">      <span class="kw">const</span> score <span class="op">=</span> <span class="op">-</span><span class="kw">this</span>.<span class="at">getScore</span>(nextGameState<span class="op">,</span> <span class="op">-</span>beta<span class="op">,</span> <span class="op">-</span><span class="va">nextScoreAndGameState</span>.<span class="at">get</span>(<span class="dv">0</span>))<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-61" data-line-number="61">      <span class="cf">if</span> (score <span class="op">&gt;</span> <span class="va">nextScoreAndGameState</span>.<span class="at">get</span>(<span class="dv">0</span>)) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-62" data-line-number="62">        nextScoreAndGameState <span class="op">=</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(score<span class="op">,</span> nextGameState)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-63" data-line-number="63">      <span class="op">}</span></a>
-<a class="sourceLine" id="cb18-64" data-line-number="64"></a>
-<a class="sourceLine" id="cb18-65" data-line-number="65">      <span class="co">// 枝刈り</span></a>
-<a class="sourceLine" id="cb18-66" data-line-number="66">      <span class="cf">if</span> (<span class="va">nextScoreAndGameState</span>.<span class="at">get</span>(<span class="dv">0</span>) <span class="op">&gt;=</span> beta) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-67" data-line-number="67">        <span class="cf">return</span> nextScoreAndGameState<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-68" data-line-number="68">      <span class="op">}</span></a>
-<a class="sourceLine" id="cb18-69" data-line-number="69">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb18-70" data-line-number="70"></a>
-<a class="sourceLine" id="cb18-71" data-line-number="71">    <span class="cf">return</span> nextScoreAndGameState<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-72" data-line-number="72">  <span class="op">};</span></a>
-<a class="sourceLine" id="cb18-73" data-line-number="73"></a>
-<a class="sourceLine" id="cb18-74" data-line-number="74">  <span class="at">getScore</span>(gameState<span class="op">,</span> alpha<span class="op">,</span> beta) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-75" data-line-number="75">    <span class="kw">const</span> winner <span class="op">=</span> <span class="va">gameState</span>.<span class="at">winner</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb18-76" data-line-number="76">    <span class="cf">if</span> (winner <span class="op">&gt;=</span> <span class="dv">0</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-77" data-line-number="77">      <span class="cf">return</span> winner <span class="op">==</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">0</span> : (winner <span class="op">==</span> <span class="va">gameState</span>.<span class="at">nextPlayer</span> <span class="op">?</span> <span class="dv">1</span> : <span class="dv">-1</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-78" data-line-number="78">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb18-79" data-line-number="79"></a>
-<a class="sourceLine" id="cb18-80" data-line-number="80">    <span class="cf">return</span> <span class="kw">this</span>.<span class="at">getNextScoreAndGameState</span>(gameState<span class="op">,</span> alpha<span class="op">,</span> beta).<span class="at">get</span>(<span class="dv">0</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-81" data-line-number="81">  <span class="op">};</span></a>
-<a class="sourceLine" id="cb18-82" data-line-number="82"></a>
-<a class="sourceLine" id="cb18-83" data-line-number="83">  async <span class="at">getNextGameState</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-84" data-line-number="84">    <span class="cf">return</span> <span class="kw">this</span>.<span class="at">getNextScoreAndGameState</span>(<span class="kw">this</span>.<span class="at">gameState</span><span class="op">,</span> <span class="op">-</span><span class="kw">Infinity</span><span class="op">,</span> <span class="kw">Infinity</span>).<span class="at">get</span>(<span class="dv">1</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-85" data-line-number="85">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb18-86" data-line-number="86"><span class="op">}</span></a>
-<a class="sourceLine" id="cb18-87" data-line-number="87"></a>
-<a class="sourceLine" id="cb18-88" data-line-number="88"><span class="kw">class</span> HumanPlayer <span class="kw">extends</span> <span class="va">I</span>.<span class="at">Record</span>(<span class="op">{</span><span class="dt">gameState</span><span class="op">:</span> <span class="kw">null</span><span class="op">}</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-89" data-line-number="89">  async <span class="at">getNextGameState</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-90" data-line-number="90">    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`You are player </span><span class="sc">${</span> <span class="kw">this</span>.<span class="va">gameState</span>.<span class="at">nextPlayer</span> <span class="sc">}</span><span class="vs">. Game is below.`</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-91" data-line-number="91">    <span class="kw">this</span>.<span class="va">gameState</span>.<span class="at">draw</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-92" data-line-number="92"></a>
-<a class="sourceLine" id="cb18-93" data-line-number="93">    <span class="kw">const</span> nextGameStates <span class="op">=</span> <span class="kw">this</span>.<span class="va">gameState</span>.<span class="at">nextGameStates</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb18-94" data-line-number="94"></a>
-<a class="sourceLine" id="cb18-95" data-line-number="95">    <span class="va">nextGameStates</span>.<span class="at">entrySeq</span>().<span class="at">forEach</span>(entry <span class="op">=&gt;</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-96" data-line-number="96">      <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`No. </span><span class="sc">${</span> entry[<span class="dv">0</span>] <span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-97" data-line-number="97">      entry[<span class="dv">1</span>].<span class="at">draw</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-98" data-line-number="98">    <span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-99" data-line-number="99"></a>
-<a class="sourceLine" id="cb18-100" data-line-number="100">    <span class="cf">return</span> await <span class="kw">new</span> <span class="at">Promise</span>(resolve <span class="op">=&gt;</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-101" data-line-number="101">      <span class="kw">const</span> readlineInterface <span class="op">=</span> <span class="va">readline</span>.<span class="at">createInterface</span>(<span class="op">{</span> <span class="dt">input</span><span class="op">:</span> <span class="va">process</span>.<span class="at">stdin</span><span class="op">,</span> <span class="dt">output</span><span class="op">:</span> <span class="va">process</span>.<span class="at">stdout</span> <span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-102" data-line-number="102"></a>
-<a class="sourceLine" id="cb18-103" data-line-number="103">      <span class="va">readlineInterface</span>.<span class="at">question</span>(<span class="st">'Which do you select? '</span><span class="op">,</span> answer <span class="op">=&gt;</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-104" data-line-number="104">        <span class="at">resolve</span>(<span class="va">nextGameStates</span>.<span class="at">get</span>(answer))<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-105" data-line-number="105">        <span class="va">readlineInterface</span>.<span class="at">close</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-106" data-line-number="106">      <span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-107" data-line-number="107">    <span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-108" data-line-number="108">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb18-109" data-line-number="109"><span class="op">}</span></a>
-<a class="sourceLine" id="cb18-110" data-line-number="110"></a>
-<a class="sourceLine" id="cb18-111" data-line-number="111"><span class="co">// ゲームを実行します。GameStateが引数になって属性が不要になったので、関数にします。</span></a>
-<a class="sourceLine" id="cb18-112" data-line-number="112"><span class="im">export</span> <span class="im">default</span> async <span class="kw">function</span> <span class="at">tictactoe</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-113" data-line-number="113">  <span class="co">// 再帰でループします。引数は、ゲームの状態とプレイヤーの集合です。</span></a>
-<a class="sourceLine" id="cb18-114" data-line-number="114">  (async <span class="kw">function</span> <span class="at">_</span>(gameState<span class="op">,</span> players) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-115" data-line-number="115">    <span class="co">// 勝者を表示します。</span></a>
-<a class="sourceLine" id="cb18-116" data-line-number="116">    <span class="kw">const</span> winner <span class="op">=</span> <span class="va">gameState</span>.<span class="at">winner</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb18-117" data-line-number="117">    <span class="cf">if</span> (winner <span class="op">&gt;=</span> <span class="dv">0</span>) <span class="op">{</span></a>
-<a class="sourceLine" id="cb18-118" data-line-number="118">      <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`Player </span><span class="sc">${</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="st">'-'</span><span class="op">,</span> <span class="st">'1'</span><span class="op">,</span> <span class="st">'2'</span>).<span class="at">get</span>(winner) <span class="sc">}</span><span class="vs"> win!`</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-119" data-line-number="119">      <span class="va">gameState</span>.<span class="at">draw</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-120" data-line-number="120">      <span class="cf">return</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb18-121" data-line-number="121">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb18-122" data-line-number="122"></a>
-<a class="sourceLine" id="cb18-123" data-line-number="123">    <span class="co">// 最初のプレイヤーを使用してgetNextGameState()した結果と残りのプレイヤーの集合を引数にして再帰します。</span></a>
-<a class="sourceLine" id="cb18-124" data-line-number="124">    <span class="at">_</span>(await <span class="va">players</span>.<span class="at">first</span>().<span class="at">set</span>(<span class="st">'gameState'</span><span class="op">,</span> gameState).<span class="at">getNextGameState</span>()<span class="op">,</span> <span class="va">players</span>.<span class="at">rest</span>())<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-125" data-line-number="125">  <span class="op">}</span>)(</a>
-<a class="sourceLine" id="cb18-126" data-line-number="126">    <span class="co">// ゲームの状態。</span></a>
-<a class="sourceLine" id="cb18-127" data-line-number="127">    <span class="kw">new</span> <span class="at">GameState</span>()<span class="op">,</span></a>
-<a class="sourceLine" id="cb18-128" data-line-number="128">    <span class="co">// 人間、コンピューター、人間、コンピューターと無限に続く集合。Immutable.jsは無限の集合を扱えてとても便利。</span></a>
-<a class="sourceLine" id="cb18-129" data-line-number="129">    <span class="va">I</span>.<span class="at">Repeat</span>(<span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="kw">new</span> <span class="at">HumanPlayer</span>()<span class="op">,</span> <span class="kw">new</span> <span class="at">ComputerPlayer</span>())).<span class="at">flatten</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb18-130" data-line-number="130">  )<span class="op">;</span></a>
-<a class="sourceLine" id="cb18-131" data-line-number="131"><span class="op">}</span></a></code></pre></div>
+<a class="sourceLine" id="cb18-55" data-line-number="55"></a>
+<a class="sourceLine" id="cb18-56" data-line-number="56">    <span class="kw">let</span> nextScoreAndGameState <span class="op">=</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(alpha<span class="op">,</span> <span class="kw">null</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-57" data-line-number="57"></a>
+<a class="sourceLine" id="cb18-58" data-line-number="58">    <span class="cf">for</span> (<span class="kw">const</span> nextGameState of <span class="va">gameState</span>.<span class="at">nextGameStates</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-59" data-line-number="59">      <span class="kw">const</span> score <span class="op">=</span> <span class="op">-</span><span class="kw">this</span>.<span class="at">getScore</span>(nextGameState<span class="op">,</span> <span class="op">-</span>beta<span class="op">,</span> <span class="op">-</span><span class="va">nextScoreAndGameState</span>.<span class="at">get</span>(<span class="dv">0</span>))<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-60" data-line-number="60">      <span class="cf">if</span> (score <span class="op">&gt;</span> <span class="va">nextScoreAndGameState</span>.<span class="at">get</span>(<span class="dv">0</span>)) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-61" data-line-number="61">        nextScoreAndGameState <span class="op">=</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(score<span class="op">,</span> nextGameState)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-62" data-line-number="62">      <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-63" data-line-number="63"></a>
+<a class="sourceLine" id="cb18-64" data-line-number="64">      <span class="co">// 枝刈り</span></a>
+<a class="sourceLine" id="cb18-65" data-line-number="65">      <span class="cf">if</span> (<span class="va">nextScoreAndGameState</span>.<span class="at">get</span>(<span class="dv">0</span>) <span class="op">&gt;=</span> beta) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-66" data-line-number="66">        <span class="cf">return</span> nextScoreAndGameState<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-67" data-line-number="67">      <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-68" data-line-number="68">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-69" data-line-number="69"></a>
+<a class="sourceLine" id="cb18-70" data-line-number="70">    <span class="cf">return</span> nextScoreAndGameState<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-71" data-line-number="71">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb18-72" data-line-number="72"></a>
+<a class="sourceLine" id="cb18-73" data-line-number="73">  <span class="at">getScore</span>(gameState<span class="op">,</span> alpha<span class="op">,</span> beta) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-74" data-line-number="74">    <span class="kw">const</span> winner <span class="op">=</span> <span class="va">gameState</span>.<span class="at">winner</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-75" data-line-number="75">    <span class="cf">if</span> (winner <span class="op">&gt;=</span> <span class="dv">0</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-76" data-line-number="76">      <span class="cf">return</span> winner <span class="op">==</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">0</span> : (winner <span class="op">==</span> <span class="va">gameState</span>.<span class="at">nextPlayer</span> <span class="op">?</span> <span class="dv">1</span> : <span class="dv">-1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-77" data-line-number="77">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-78" data-line-number="78"></a>
+<a class="sourceLine" id="cb18-79" data-line-number="79">    <span class="cf">return</span> <span class="kw">this</span>.<span class="at">getNextScoreAndGameState</span>(gameState<span class="op">,</span> alpha<span class="op">,</span> beta).<span class="at">get</span>(<span class="dv">0</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-80" data-line-number="80">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb18-81" data-line-number="81"></a>
+<a class="sourceLine" id="cb18-82" data-line-number="82">  async <span class="at">getNextGameState</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-83" data-line-number="83">    <span class="cf">return</span> <span class="kw">this</span>.<span class="at">getNextScoreAndGameState</span>(<span class="kw">this</span>.<span class="at">gameState</span><span class="op">,</span> <span class="op">-</span><span class="kw">Infinity</span><span class="op">,</span> <span class="kw">Infinity</span>).<span class="at">get</span>(<span class="dv">1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-84" data-line-number="84">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-85" data-line-number="85"><span class="op">}</span></a>
+<a class="sourceLine" id="cb18-86" data-line-number="86"></a>
+<a class="sourceLine" id="cb18-87" data-line-number="87"><span class="kw">class</span> HumanPlayer <span class="kw">extends</span> <span class="va">I</span>.<span class="at">Record</span>(<span class="op">{</span><span class="dt">gameState</span><span class="op">:</span> <span class="kw">null</span><span class="op">}</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-88" data-line-number="88">  async <span class="at">getNextGameState</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-89" data-line-number="89">    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`You are player </span><span class="sc">${</span> <span class="kw">this</span>.<span class="va">gameState</span>.<span class="at">nextPlayer</span> <span class="sc">}</span><span class="vs">. Game is below.`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-90" data-line-number="90">    <span class="kw">this</span>.<span class="va">gameState</span>.<span class="at">draw</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-91" data-line-number="91"></a>
+<a class="sourceLine" id="cb18-92" data-line-number="92">    <span class="kw">const</span> nextGameStates <span class="op">=</span> <span class="kw">this</span>.<span class="va">gameState</span>.<span class="at">nextGameStates</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-93" data-line-number="93"></a>
+<a class="sourceLine" id="cb18-94" data-line-number="94">    <span class="va">nextGameStates</span>.<span class="at">entrySeq</span>().<span class="at">forEach</span>(entry <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-95" data-line-number="95">      <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`No. </span><span class="sc">${</span> entry[<span class="dv">0</span>] <span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-96" data-line-number="96">      entry[<span class="dv">1</span>].<span class="at">draw</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-97" data-line-number="97">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-98" data-line-number="98"></a>
+<a class="sourceLine" id="cb18-99" data-line-number="99">    <span class="cf">return</span> await <span class="kw">new</span> <span class="at">Promise</span>(resolve <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-100" data-line-number="100">      <span class="kw">const</span> readlineInterface <span class="op">=</span> <span class="va">readline</span>.<span class="at">createInterface</span>(<span class="op">{</span> <span class="dt">input</span><span class="op">:</span> <span class="va">process</span>.<span class="at">stdin</span><span class="op">,</span> <span class="dt">output</span><span class="op">:</span> <span class="va">process</span>.<span class="at">stdout</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-101" data-line-number="101"></a>
+<a class="sourceLine" id="cb18-102" data-line-number="102">      <span class="va">readlineInterface</span>.<span class="at">question</span>(<span class="st">'Which do you select? '</span><span class="op">,</span> answer <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-103" data-line-number="103">        <span class="at">resolve</span>(<span class="va">nextGameStates</span>.<span class="at">get</span>(answer))<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-104" data-line-number="104">        <span class="va">readlineInterface</span>.<span class="at">close</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-105" data-line-number="105">      <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-106" data-line-number="106">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-107" data-line-number="107">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-108" data-line-number="108"><span class="op">}</span></a>
+<a class="sourceLine" id="cb18-109" data-line-number="109"></a>
+<a class="sourceLine" id="cb18-110" data-line-number="110"><span class="co">// ゲームを実行します。GameStateが引数になって属性が不要になったので、関数にします。</span></a>
+<a class="sourceLine" id="cb18-111" data-line-number="111"><span class="im">export</span> <span class="im">default</span> async <span class="kw">function</span> <span class="at">tictactoe</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-112" data-line-number="112">  <span class="co">// 再帰でループします。引数は、ゲームの状態とプレイヤーの集合です。</span></a>
+<a class="sourceLine" id="cb18-113" data-line-number="113">  (async <span class="kw">function</span> <span class="at">_</span>(gameState<span class="op">,</span> players) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-114" data-line-number="114">    <span class="co">// 勝者を表示します。</span></a>
+<a class="sourceLine" id="cb18-115" data-line-number="115">    <span class="kw">const</span> winner <span class="op">=</span> <span class="va">gameState</span>.<span class="at">winner</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-116" data-line-number="116">    <span class="cf">if</span> (winner <span class="op">&gt;=</span> <span class="dv">0</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-117" data-line-number="117">      <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`Player </span><span class="sc">${</span> <span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="st">'-'</span><span class="op">,</span> <span class="st">'1'</span><span class="op">,</span> <span class="st">'2'</span>).<span class="at">get</span>(winner) <span class="sc">}</span><span class="vs"> win!`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-118" data-line-number="118">      <span class="va">gameState</span>.<span class="at">draw</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-119" data-line-number="119">      <span class="cf">return</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-120" data-line-number="120">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-121" data-line-number="121"></a>
+<a class="sourceLine" id="cb18-122" data-line-number="122">    <span class="co">// 最初のプレイヤーを使用してgetNextGameState()した結果と残りのプレイヤーの集合を引数にして再帰します。</span></a>
+<a class="sourceLine" id="cb18-123" data-line-number="123">    <span class="at">_</span>(await <span class="va">players</span>.<span class="at">first</span>().<span class="at">set</span>(<span class="st">'gameState'</span><span class="op">,</span> gameState).<span class="at">getNextGameState</span>()<span class="op">,</span> <span class="va">players</span>.<span class="at">rest</span>())<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-124" data-line-number="124">  <span class="op">}</span>)(</a>
+<a class="sourceLine" id="cb18-125" data-line-number="125">    <span class="co">// ゲームの状態。</span></a>
+<a class="sourceLine" id="cb18-126" data-line-number="126">    <span class="kw">new</span> <span class="at">GameState</span>()<span class="op">,</span></a>
+<a class="sourceLine" id="cb18-127" data-line-number="127">    <span class="co">// 人間、コンピューター、人間、コンピューターと無限に続く集合。Immutable.jsは無限の集合を扱えてとても便利。</span></a>
+<a class="sourceLine" id="cb18-128" data-line-number="128">    <span class="va">I</span>.<span class="at">Repeat</span>(<span class="va">I</span>.<span class="va">List</span>.<span class="at">of</span>(<span class="kw">new</span> <span class="at">HumanPlayer</span>()<span class="op">,</span> <span class="kw">new</span> <span class="at">ComputerPlayer</span>())).<span class="at">flatten</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb18-129" data-line-number="129">  )<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-130" data-line-number="130"><span class="op">}</span></a></code></pre></div>
 <p>やったぜ！　完全にイミュータブルです。短くなったし、分かりやすくなったし。Immutable.jsすげぇ！<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 <p>というわけで、これで完成かな？</p>
 <h2>関数の組み合わせで、楽をしましょう</h2>
