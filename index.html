@@ -1289,7 +1289,7 @@ console.log(map(filter(developers,
 <a class="sourceLine" id="cb24-9" data-line-number="9">get <span class="at">nextPlayer</span>() <span class="op">{</span></a>
 <a class="sourceLine" id="cb24-10" data-line-number="10">  <span class="cf">return</span> <span class="kw">this</span>.<span class="va">board</span>.<span class="at">filter</span>(<span class="at">equals</span>(<span class="dv">0</span>)).<span class="at">size</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">?</span> <span class="dv">1</span> : <span class="dv">2</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb24-11" data-line-number="11"><span class="op">}</span></a></code></pre></div>
-<p>ECMAScriptは引数の数が合わない場合はエラーにならずに単純に無視されますから、引数<code>b</code>が指定されなかった場合は関数を返して、両方を指定した場合は処理結果を返します。このように、引数を1つ指定すると残りの引数をとる関数を返すような関数にすることを、カリー化と呼びます<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>。</p>
+<p>ECMAScriptは引数の数が合わない場合はエラーにならずに単純に無視されますから、引数<code>b</code>が指定されなかった場合は関数を返して、両方を指定した場合は処理結果を返します。このよう<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>に、引数を1つ指定すると残りの引数をとる関数を返すような関数にすることを、カリー化と呼びます。</p>
 <p>でも、毎回こんな面倒な形で関数を書くのはやってられませんよね？　だから、カリー化を全面的に採用した関数型プログラミング用のライブラリである<a href="http://ramdajs.com/">Ramda</a>を使用しましょう。</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="im">import</span> R <span class="im">from</span> <span class="st">'ramda'</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb25-2" data-line-number="2"></a>
