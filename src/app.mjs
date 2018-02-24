@@ -1,3 +1,3 @@
-import tictactoe from './tictactoeWithFP';
+import tictactoe from './tictactoeWithOOP2';
 
 tictactoe();
