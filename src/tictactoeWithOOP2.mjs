@@ -74,7 +74,7 @@ class ComputerPlayer extends I.Record({gameState: null}) {
     };
 
     return _(I.List.of(alpha, null), gameState.nextGameStates);
-  };
+  }
 
   getScore(gameState, alpha, beta) {
     const winner = gameState.winner;
@@ -83,7 +83,7 @@ class ComputerPlayer extends I.Record({gameState: null}) {
     }
 
     return this.getNextScoreAndGameState(gameState, alpha, beta).get(0);
-  };
+  }
 
   async getNextGameState() {
     return this.getNextScoreAndGameState(this.gameState, -Infinity, Infinity).get(1);
