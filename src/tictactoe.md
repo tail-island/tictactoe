@@ -629,24 +629,30 @@ class GameState extends I.Record({board: I.List.of(0, 0, 0, 0, 0, 0, 0, 0, 0)}) 
 
 class ComputerPlayer extends I.Record({gameState: null}) {
   getNextScoreAndGameState(gameState, alpha, beta) {
-    // Immutable.jsのreduceを途中で止める方法が分からなくて枝刈りできなかったので、ごめんなさい、for文のままです。
+    // Immutable.jsのreduceを途中で止める方法が分からなくて枝刈りできなかったので、ごめんなさい、再帰で。
 
-    let nextScoreAndGameState = I.List.of(alpha, null);
-
-    for (const nextGameState of gameState.nextGameStates) {
-      const score = -this.getScore(nextGameState, -beta, -nextScoreAndGameState.get(0));
-      if (score > nextScoreAndGameState.get(0)) {
-        nextScoreAndGameState = I.List.of(score, nextGameState);
+    const _ = (acc, nextGameStates) => {
+      const nextGameState = nextGameStates.first();
+      if (!nextGameState) {
+        return acc;
       }
 
-      // 枝刈り
-      if (nextScoreAndGameState.get(0) >= beta) {
-        return nextScoreAndGameState;
-      }
-    }
+      const score = -this.getScore(nextGameState, -beta, -acc.get(0));
+      if (score > acc.get(0)) {
+        // 枝刈り
+        if (score >= beta) {
+          return I.List.of(score, nextGameState);
+        }
 
-    return nextScoreAndGameState;
-  };
+        return _(I.List.of(score, nextGameState), nextGameStates.rest());
+
+      } else {
+        return _(acc, nextGameStates.rest());
+      }
+    };
+
+    return _(I.List.of(alpha, null), gameState.nextGameStates);
+  }
 
   getScore(gameState, alpha, beta) {
     const winner = gameState.winner;
@@ -655,7 +661,7 @@ class ComputerPlayer extends I.Record({gameState: null}) {
     }
 
     return this.getNextScoreAndGameState(gameState, alpha, beta).get(0);
-  };
+  }
 
   async getNextGameState() {
     return this.getNextScoreAndGameState(this.gameState, -Infinity, Infinity).get(1);
